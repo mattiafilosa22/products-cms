@@ -29,11 +29,13 @@ services:
     ports:
       - "3008:3008"
     volumes:
-      - ./backend:/app
-      - /app/node_modules 
-      - /app/prisma      # Permette di vedere le migrazioni create dal container sul tuo PC
-    # Il comando ora si occupa solo delle migrazioni, non dell'installazione
-    command: sh -c "npx prisma generate && npx prisma migrate dev --name init && npm run dev"
+      - ./backend:/app # Mappa la cartella locale 'backend' in '/app' nel container
+      - /app/node_modules # Protegge i moduli installati nel container (CORRETTO)
+    command: 
+      sh -c "npx prisma generate && 
+             npx prisma db push && 
+             npx tsx prisma/seed.ts && 
+             npm run dev"
     depends_on:
       db:
         condition: service_healthy
@@ -46,12 +48,12 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      - ./frontend:/app # Mappa la cartella locale in /app
+      - /app/node_modules # Protegge i moduli (NON usare ./frontend/node_modules)
+      - /app/.next # Protegge la cache di Next.js (NON usare ./frontend/.next)
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:3008
-      - WATCHPACK_POLLING=true # Utile per il refresh automatico in Docker
+      - WATCHPACK_POLLING=true
     networks:
       - ecommerce_net
     depends_on:
