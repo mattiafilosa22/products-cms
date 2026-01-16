@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2022",                /* Linguaggio moderno 🚀 */
-    "module": "NodeNext",              /* Gestione moduli aggiornata 📦 */
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "rootDir": "./src",                /* Dove si trova il tuo codice 📂 */
-    "outDir": "./dist",                /* Dove finirà il codice compilato 🏗️ */
-    "esModuleInterop": true,           /* Risolve l'errore di import di Express! ✅ */
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,                    /* Massima sicurezza 🛡️ */
-    "skipLibCheck": true               /* Velocizza la compilazione saltando i controlli sulle librerie esterne ⚡ */
-  },
-  "include": ["src/**/*"],             /* Includi tutto ciò che è in src */
-  "exclude": ["node_modules"]          /* Ignora le librerie esterne */
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "outDir": "./dist",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": false,
+    "rewriteRelativeImportExtensions": true
+  }
 }
