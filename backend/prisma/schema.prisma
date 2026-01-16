@@ -1,0 +1,23 @@
+// Configurazione del generatore (crea il client TypeScript)
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Configurazione della connessione al database
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modello del Prodotto
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  price         Decimal  @db.Decimal(10, 2)
+  discountPrice Decimal? @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("products")
+}
