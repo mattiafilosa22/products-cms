@@ -23,15 +23,13 @@ services:
   backend:
     build: ./backend
     container_name: ecommerce_backend
-    # TODO: use .env file
-    environment:
-      DATABASE_URL: "postgresql://user_admin:password_sicura@db:5432/ecommerce_db?schema=public"
-      PORT: 3008
+    env_file:
+      - ./backend/.env
     ports:
       - "3008:3008"
     volumes:
-      - ./backend:/app # Mappa la cartella locale 'backend' in '/app' nel container
-      - /app/node_modules # Protegge i moduli installati nel container (CORRETTO)
+      - ./backend:/app
+      - /app/node_modules
     command: sh -c "npx prisma generate &&
       npx prisma db push &&
       npx tsx prisma/seed.ts &&
@@ -48,13 +46,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app # Mappa la cartella locale in /app
-      - /app/node_modules # Protegge i moduli (NON usare ./frontend/node_modules)
-      - /app/.next # Protegge la cache di Next.js (NON usare ./frontend/.next)
-    # TODO: use .env file
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3008/api
-      - WATCHPACK_POLLING=true
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    env_file:
+      - ./frontend/.env
     networks:
       - ecommerce_net
     depends_on:
