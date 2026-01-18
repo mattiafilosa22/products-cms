@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
-import apiClient from "../../api/api-client";
+import { getAllProducts } from "@/api/products/_getAllProducts";
 
 export default function ProductsPage() {
+  const { data, isLoading, error, getProducts } = getAllProducts();
   useEffect(() => {
-    apiClient
-      .get("/products")
-      .then((res) => console.log("Connessione OK! Dati:", res.data))
-      .catch((err) => console.error("Connessione fallita:", err));
+    getProducts({ page: 1, limit: 10 });
   }, []);
 
   return (
     <div>
       <h1>Products</h1>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
     </div>
   );
 }
