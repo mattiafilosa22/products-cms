@@ -1,9 +1,18 @@
 import express from "express";
 import prisma from "./core/config/prisma.js";
 import productsRoutes from "./api/products/products-routes.ts";
+import cors from 'cors';
 
 const app = express();
 const PORT = 3008;
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'x-api-key']
+}));
+
+app.use(express.json());
 
 async function bootstrap() {
   try {

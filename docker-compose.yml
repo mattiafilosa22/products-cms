@@ -32,11 +32,10 @@ services:
     volumes:
       - ./backend:/app # Mappa la cartella locale 'backend' in '/app' nel container
       - /app/node_modules # Protegge i moduli installati nel container (CORRETTO)
-    command: 
-      sh -c "npx prisma generate && 
-             npx prisma db push && 
-             npx tsx prisma/seed.ts && 
-             npm run dev"
+    command: sh -c "npx prisma generate &&
+      npx prisma db push &&
+      npx tsx prisma/seed.ts &&
+      npm run dev"
     depends_on:
       db:
         condition: service_healthy
@@ -54,7 +53,7 @@ services:
       - /app/.next # Protegge la cache di Next.js (NON usare ./frontend/.next)
     # TODO: use .env file
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3008
+      - NEXT_PUBLIC_API_URL=http://localhost:3008/api
       - WATCHPACK_POLLING=true
     networks:
       - ecommerce_net
