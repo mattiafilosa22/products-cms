@@ -15,9 +15,7 @@ export default function ProductPage({
     getProductById(id);
   }, [id, getProductById]);
 
-  console.log("data", data);
-  console.log("id", id);
-  console.log("error", error);
+
   return (
     <div>
       <h1>Product</h1>
