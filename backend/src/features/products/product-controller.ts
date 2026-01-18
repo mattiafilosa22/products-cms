@@ -4,6 +4,7 @@ import fs from "fs";
 import { createProductSchema, updateProductSchema } from "./product.schema.js";
 import { parseProductsFromCsv } from "./services/csv-service.ts";
 import { bulkCreateProducts } from "./services/product-service.ts";
+import { Prisma } from "@prisma/client";
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
@@ -80,7 +81,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
     // create product in db
     const product = await prisma.product.create({
-      data: validation.data
+      data: validation.data as Prisma.ProductCreateInput
     });
 
     // return product
@@ -108,7 +109,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
     // update product in db
     const product = await prisma.product.update({
-      where: { id },
+      where: { id: Number(id) },
       data: validation.data
     });
 
