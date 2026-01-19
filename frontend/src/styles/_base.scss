@@ -5,7 +5,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: var(--font-sf-pro-text);
+  font-family: var(--font-geist-sans);
+  font-variant-numeric: tabular-nums;
 }
 
 body {

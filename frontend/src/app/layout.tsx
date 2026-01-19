@@ -2,6 +2,8 @@ import { ToastContainer } from "react-toastify";
 import "@/styles/main.scss";
 import styles from "./layout.module.scss";
 import ContentContainer from "./[products]/_layout/content-container/content-container";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 
 export default async function LocaleLayout({
   children,
@@ -11,7 +13,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang="it">
-      <body suppressHydrationWarning={true} className={styles.body}>
+      <body suppressHydrationWarning={true} className={`${styles.body} ${GeistSans.className} ${GeistMono.className}`}>
         <>
           <ToastContainer
             position="top-center"
