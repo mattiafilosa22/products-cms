@@ -14,7 +14,7 @@ export default function ProductsPage() {
   return (
     <div>
       <ProductListTable
-        data={data?.products}
+        data={data?.data}
         pagination={data?.pagination}
         onOptionsChange={getProducts}
         isDataLoading={isLoading}

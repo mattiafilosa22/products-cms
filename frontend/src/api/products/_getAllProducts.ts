@@ -8,7 +8,7 @@ export type GetAllProductsRequest = {
 };
 
 export type GetAllProductsResponse = {
-  products: Product[];
+  data: Product[];
   pagination: {
     total: number;
     page: number;
