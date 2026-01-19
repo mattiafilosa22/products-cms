@@ -1,0 +1,97 @@
+@use "@/styles/variables" as *;
+@use '@/styles/colors' as *;
+
+.loaderOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: inherit;
+}
+
+.loaderContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
+}
+
+.loaderContent.sm {
+  gap: $spacing-2;
+}
+
+.loaderContent.md {
+  gap: $spacing-3;
+}
+
+.loaderContent.lg {
+  gap: $spacing-4;
+}
+
+.loaderText {
+  color: var(--color-text-secondary, #666);
+  font-size: $font-size-small;
+  font-weight: 500;
+  text-align: center;
+}
+
+.loaderContent.sm .loaderText {
+  font-size: $font-size-3;
+}
+
+.loaderContent.lg .loaderText {
+  font-size: $font-size-4;
+}
+
+/* Animation per l'icona SVG */
+.loaderContent svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress bar styles */
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+}
+
+.progressBar {
+  width: 100%;
+  height: $spacing-1;
+  background-color: var(--loader-progress-track, rgba(0, 0, 0, 0.1));
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--loader-progress-fill, #{$green-400});
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.loaderContent.sm .progressBar {
+  height: 3px;
+}
+
+.loaderContent.lg .progressBar {
+  height: 6px;
+}

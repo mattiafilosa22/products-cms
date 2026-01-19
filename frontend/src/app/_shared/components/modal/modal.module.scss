@@ -1,0 +1,95 @@
+@use "@/styles/variables" as *;
+
+.modalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  /* Center the modal content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--layer-modal);
+}
+
+.modal {
+  padding: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;  
+
+  background-color: $color-modal-background;
+  border-radius: $spacing-2;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+
+  &.sm {
+    max-width: 300px;
+  }
+
+  &.md {
+    max-width: 500px;
+  }
+
+}
+  
+.modalBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: default;
+  z-index: -1; /* Place behind modal content */
+}
+
+
+// .mediumModal {
+//   display: flex;
+//   flex-direction: column;
+//   gap: $spacing-10;
+
+
+// }
+
+// .modal {
+//   padding: $spacing-6;
+//   display: flex;
+//   flex-direction: column;
+//   gap: $spacing-6;
+// }
+
+// .mediumModal {
+//   width: 556px;
+// }
+
+
+.modalHeader {
+  display: flex;
+  gap: $spacing-10;
+
+  .modalTitle {
+    font-family: var(--font-sf-pro-display);
+    font-size: $font-size-8;
+    font-weight: bold;
+    line-height: 48px;
+    margin-right: auto;
+    flex: 1;
+  }
+
+  .modalClose {
+    margin-left: auto;
+    cursor: pointer;
+  }
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

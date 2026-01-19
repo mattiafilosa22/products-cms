@@ -1,8 +1,4 @@
-type BaseAction = {
-  label?: string;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>> | null;
-  onClick?: () => void;
-}
+import { BaseAction } from "../types/global";
 
 export type TableActionConfig<T> = BaseAction & {
   key: string;

@@ -1,0 +1,176 @@
+@use "@/styles/variables" as *;
+@use '@/styles/colors' as *;
+
+.appButton {
+  padding: 0 $spacing-3;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: $spacing-2;
+  font-weight: 700;
+  font-family: var(--font-sf-pro-display);
+
+  &.filled {
+    &.primary {
+      color: $white;
+      background: $green-400;
+      border-color: $green-400;
+
+      svg path {
+        stroke: white;
+      }
+    }
+
+    &.danger {
+      background: $red-500;
+      color: $white;
+      border-color: $red-500
+    }
+
+    &.neutral {
+      background: $black;
+      color: var(--color-neutral-inverse);
+      border-color: $black
+    }
+    &.white {
+      background: $white;
+      color: $text-primary;
+    }
+  }
+
+  &.outlined {
+    background: transparent;
+
+    &.primary {
+      color: $green-400;
+      border-color: $green-400;
+
+      svg path {
+        stroke: white;
+      }
+    }
+
+    &.danger {
+      color: $red-500;
+      border-color: $red-500;
+    }
+
+    &.neutral {
+      border-radius: 14px;
+      border: 1px solid $interactive-base-default;
+      background: var(--surface-surface-inverse);
+    }
+
+    &.dashed {
+      border: 1px dashed $green-400;
+      color: $green-400
+    }
+
+    &.empty {
+      border-color: none!important;
+
+      &:focus {
+      border-color: $interactive-base-default;
+
+      }
+    }
+  }
+
+  &.link {
+    background: transparent;
+    border: none;
+    min-width: unset;
+
+    &.primary {
+      color: $green-400;
+
+      svg path {
+        stroke: white;
+      }
+    }
+
+    &.danger {
+      color: $red-500;
+    }
+
+    &.neutral {
+      color: $black;
+    }
+  }
+
+  &.underline {
+    text-decoration: underline;
+    background-color: transparent;
+    color: var(--label-label-1);
+    font-size: $spacing-4;
+    font-style: normal;
+    font-weight: 600;
+    line-height: $spacing-6; /* 150% */
+    letter-spacing: -0.24px;
+    padding: 0!important;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &.bin {
+    background-color: $white;
+    padding: 10px !important;
+    height: $spacing-10;
+    width: $spacing-10;
+    border: 1px solid;
+    border-radius: 14px !important;
+    align-self: center !important;
+
+    display: flex;
+    padding: $spacing-3;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &:not(.custom) {
+    &.sm {
+      font-size: 13px;
+      padding: $spacing-2 $spacing-6;
+      border-radius: $spacing-3;
+    }
+
+    &.md {
+      font-size: $font-size-4;
+      padding: 10px $spacing-6;
+      border-radius: $radius-standard;
+    }
+
+    &.lg {
+      font-size: $font-size-4;
+      min-width: 206px;
+      height: 48px;
+      min-height: 48px;
+      border-radius: $radius-standard;
+    }
+
+    &.icon {
+      padding: $spacing-2;
+      border-radius: 6px;
+    }
+
+    &.secondary {
+
+    }
+
+    &.outline {
+
+    }
+
+    &.loading {
+
+    }
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

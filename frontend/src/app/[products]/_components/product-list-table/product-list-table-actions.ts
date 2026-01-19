@@ -1,0 +1,33 @@
+import IconEdit from "@/assets/icons/edit.svg";
+import IconBin from "@/assets/icons/bin.svg";
+import { TableActionConfig } from "@/app/_shared/table/table-action-config";
+import { Product } from "@/api/products/_type";
+
+export const getActions = (
+  handleEdit: (event: Product) => void,
+  handleDelete: (event: Product) => void
+): TableActionConfig<Product>[] => {
+
+  return [
+    {
+      key: 'edit',
+      label: 'Common.action_edit',
+      icon: IconEdit,
+      action: handleEdit,
+      type: 'primary',
+      variant: 'neutral',
+      style: 'link',
+    },
+    {
+      key: 'delete',
+      label: "Common.action_delete",
+      modalContentTitle: 'Common.action_delete',
+      modalContentBody: 'Common.modal_delete_content',
+      icon: IconBin,
+      action: handleDelete,
+      type: 'secondary',
+      variant: 'danger',
+      style: 'link',
+    },
+  ]
+}

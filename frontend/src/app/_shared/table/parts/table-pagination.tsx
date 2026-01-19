@@ -19,7 +19,7 @@ export const TablePagination = ({
     ({ selected }: { selected: number }) => {
       onPageChange(selected);
     },
-    [onPageChange]
+    [onPageChange],
   );
 
   return (
@@ -40,7 +40,7 @@ export const TablePagination = ({
         disabledClassName={style.customPagination__disabled}
         breakClassName={style.customPagination__page}
         renderOnZeroPageCount={null}
-        forcePage={selectedPage-1}
+        forcePage={selectedPage - 1}
       />
     </div>
   );

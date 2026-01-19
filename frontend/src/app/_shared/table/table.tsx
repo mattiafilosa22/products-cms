@@ -10,10 +10,8 @@ type ContainerProps<TData> = {
   data: TData[] | undefined;
   columns: ColumnDef<TData>[];
   actions?: TableActionConfig<TData>[];
-  searchText?: string;
   isLoading?: boolean;
   onRowClick?: (rowData: TData) => void;
-  onChangeTableFilters?: (tableState: TableState) => void;
 };
 
 export const Table = <TData extends object>({
@@ -21,19 +19,16 @@ export const Table = <TData extends object>({
   data,
   columns,
   actions = [],
-  searchText,
   isLoading = false,
   onRowClick = undefined,
-  onChangeTableFilters,
 }: ContainerProps<TData>) => {
   return (
-    <TableContextProvider onChangeTableFilters={onChangeTableFilters}>
+    <TableContextProvider>
       <TableInner<TData>
         pagination={pagination}
         data={data ?? []}
         columns={columns}
         actions={actions}
-        searchText={searchText}
         isLoading={isLoading || data === undefined}
         onRowClick={onRowClick}
       />

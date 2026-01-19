@@ -1,0 +1,16 @@
+// src/styles/_base.scss
+@use 'colors' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: var(--font-sf-pro-text);
+}
+
+body {
+  margin: 0;
+  background-color: $white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

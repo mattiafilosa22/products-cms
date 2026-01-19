@@ -1,4 +1,5 @@
 import { ToastContainer } from "react-toastify";
+import "@/styles/main.scss";
 
 export default async function LocaleLayout({
   children,

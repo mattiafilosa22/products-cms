@@ -7,29 +7,23 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PaginationData } from "@/api/paginationData";
 import { useTableContext } from "./table-context";
 import { TablePagination } from "./table-pagination";
 import style from "../table.module.scss";
 import IconLoading from "@/assets/loading.svg";
-import IconMore from "@/assets/icons/more-horizontal.svg";
 import IconCaretUp from "@/assets/icons/caret-up.svg";
 import IconCaretDown from "@/assets/icons/caret-down.svg";
-import { useTranslations } from "next-intl";
 import { TableActionConfig } from "../table-action-config";
-// TODO: move to shared components
-import { AppButton, ConfirmationModal, Modal } from "../../components";
-import { Dropdown } from "../../components/dropdown/dropdown";
-import { ModalResult } from "../../components/modal/modal-result";
+import { AppButton, Modal } from "@/app/_shared/components";
+import { ModalResult } from "@/app/_shared/components/modal/modal-result";
 
 type ContainerProps<TData> = {
-  pageSize?: number;
   pagination?: PaginationData;
   data: TData[];
   columns: ColumnDef<TData>[];
   actions: TableActionConfig<TData>[];
-  searchText?: string;
   isLoading?: boolean;
   onRowClick?: (rowData: TData) => void;
 };
@@ -39,7 +33,6 @@ export function TableInner<TData extends object>({
   data = [],
   columns,
   actions,
-  searchText = undefined,
   isLoading = false,
   onRowClick = undefined,
 }: ContainerProps<TData>) {
@@ -56,7 +49,7 @@ export function TableInner<TData extends object>({
         return { ...prev, rawSorting: newSorting };
       });
     },
-    [changeTableState]
+    [changeTableState],
   );
 
   const tableConfig: TableOptions<TData> = {
@@ -79,13 +72,11 @@ export function TableInner<TData extends object>({
 
   const table = useReactTable({ ...tableConfig });
 
-  const t = useTranslations();
-
   const handlePageChange = useCallback(
     (selected: number) => {
       changeTableState((prev) => ({ ...prev, page: selected }));
     },
-    [changeTableState]
+    [changeTableState],
   );
 
   useEffect(() => {
@@ -101,7 +92,7 @@ export function TableInner<TData extends object>({
         changeTableState((prev) => ({ ...prev }));
       }
     },
-    [changeTableState]
+    [changeTableState],
   );
 
   const getActionButton = useCallback(
@@ -109,12 +100,11 @@ export function TableInner<TData extends object>({
       action: TableActionConfig<TData>,
       rowData: TData,
       index: number,
-      size: "md" | "icon"
+      size: "md" | "icon",
     ) => {
       const button = (
         <AppButton
           key={index}
-          labelKey={action.label}
           icon={action.icon}
           style={action.style ?? "link"}
           variant={action.variant ?? "neutral"}
@@ -136,30 +126,15 @@ export function TableInner<TData extends object>({
             {action.modalContent(rowData)}
           </Modal>
         );
-      } else if (action.modalContentBody) {
-        return (
-          <ConfirmationModal
-            key={`modal-${index}`}
-            style="danger"
-            trigger={button}
-            size="md"
-            titleKey={action.modalContentTitle ?? ""}
-            messageKey={action.modalContentBody}
-            onConfirm={() => action.action?.(rowData)}
-            onCancel={() => {}}
-          />
-        );
       }
 
       return button;
     },
-    [onActionModalClosed]
+    [onActionModalClosed],
   );
 
   return (
     <div className={style.table}>
-      {filters && <TableFilters filters={filters} searchText={searchText} />}
-
       <div className={style.tableWrapper}>
         <table>
           <thead>
@@ -180,7 +155,7 @@ export function TableInner<TData extends object>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                       {{
                         asc: <IconCaretUp />,
@@ -207,7 +182,7 @@ export function TableInner<TData extends object>({
                     <span>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </span>
                   </td>
@@ -221,25 +196,7 @@ export function TableInner<TData extends object>({
                       }}
                     >
                       {primaryActionsState.map((action, index) =>
-                        getActionButton(action, row.original, index, "icon")
-                      )}
-
-                      {secondaryActionsState.length > 0 && (
-                        <Dropdown
-                          trigger={
-                            <AppButton
-                              labelKey="Common.more_actions"
-                              icon={IconMore}
-                              style="link"
-                              variant="neutral"
-                              size="icon"
-                            />
-                          }
-                        >
-                          {secondaryActionsState.map((action, index) =>
-                            getActionButton(action, row.original, index, "md")
-                          )}
-                        </Dropdown>
+                        getActionButton(action, row.original, index, "icon"),
                       )}
                     </div>
                   </td>
@@ -252,8 +209,8 @@ export function TableInner<TData extends object>({
 
       {pagination && (
         <TablePagination
-          pageCount={pagination.totalPages}
-          selectedPage={pagination.currentPage}
+          pageCount={Math.ceil(pagination.total / pagination.limit)}
+          selectedPage={pagination.page}
           onPageChange={handlePageChange}
         />
       )}
@@ -262,7 +219,7 @@ export function TableInner<TData extends object>({
         <div className={style.tableLoadingOverlay}>
           <div className={style.tableLoadingContent}>
             <IconLoading width={60} height={60} />
-            <div className={style.tableLoadingText}>{t("Table.loading")}</div>
+            <div className={style.tableLoadingText}>Loading</div>
           </div>
         </div>
       )}

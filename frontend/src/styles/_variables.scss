@@ -1,0 +1,105 @@
+@use 'colors' as *;
+
+// --- Font Size ---
+$font-size-3: 12px;
+$font-size-small: 14px;
+$font-size-4: 16px;
+$font-size-5: 20px;
+$font-size-6: 24px;
+$font-size-7: 28px;
+$font-size-8: 32px;
+$font-size-9: 36px;
+$font-size-10: 40px;
+
+// --- Spacing ---
+$spacing-0: 0;
+$spacing-1: 4px;
+$spacing-2: 8px;
+$spacing-3: 12px;
+$spacing-4: 16px;
+$spacing-5: 20px;
+$spacing-6: 24px;
+$spacing-7: 28px;
+$spacing-8: 32px;
+$spacing-9: 36px;
+$spacing-10: 40px;
+
+// --- Radius ---
+$radius-1: 4px;
+$radius-2: 8px;
+$radius-3: 12px;
+$radius-standard: 14px;
+$radius-4: 16px;
+
+// --- Surface ---
+$surface-0: $white;
+$surface-1: $soft-black;
+$surface-1-inverse: $grey-1;
+$surface-2: $grey-2;
+$surface-3: $grey-3;
+$surface-4: $grey-4;
+
+// --- On Surface ---
+$on-surface-0: $grey-10;
+$on-surface-1: $grey-1;
+$on-surface-2: $grey-8;
+$on-surface-3: $grey-7;
+$on-surface-4: $grey-6;
+
+// --- Text ---
+$text-1: $grey-1;
+$text-2: $grey-8;
+$text-3: $grey-7;
+$text-primary: $green-400;
+
+// --- Label ---
+$label-1: $grey-1;
+$label-2: $grey-7;
+$label-3: $grey-6;
+
+// --- Stroke ---
+$stroke-1: $grey-2;
+$stroke-2: $grey-3;
+$stroke-3: $grey-4;
+
+// --- Interactive ---
+$interactive-base-default: $grey-10;
+$hover: $grey-7;
+$focus: $focus;
+$focus-border: $focus;
+$pressed: $grey-8;
+$disabled: $grey-2;
+
+// --- Interactive Alt ---
+$default-alt: $grey-1;
+$hover-alt: $grey-2;
+$focus-alt: $grey-0;
+$focus-border-alt: $focus;
+$pressed-alt: $grey-3;
+$disabled-alt: $grey-2;
+
+// --- Accent ---
+$accent-default: $green-300;
+$accent-hover: $green-400;
+$accent-focus: $green-400;
+$accent-focus-border: $focus;
+$accent-pressed: $green-500;
+$accent-disabled: $grey-2;
+
+// --- Layout Colors (from _layout.scss) ---
+$topbar-background: $grey-50;
+$topbar-border-color: $light-grey;
+$color-modal-background: $grey-50;
+$color-input-border: $grey-500;
+$color-input-error: $red-500;
+$table-filters-background: $grey-50;
+$table-pagination-background: $white;
+$table-pagination-active-background: $grey-200;
+$table-pagination-border: $white;
+$table-pagination-color: $black;
+$table-border: $grey-300;
+$table-row-color-odd: $white;
+$table-row-color-even: #F9F9F9;
+$table-row-hover: $green-300;
+$table-cell-width: 209px;
+$table-filter-width: 160px;

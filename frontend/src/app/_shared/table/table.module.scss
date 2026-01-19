@@ -1,27 +1,6 @@
 @use "@/styles/variables" as *;
 @use '@/styles/colors' as *;
 
-.filters {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: $grey-50;
-  border-radius: 14px;
-  font-size: $spacing-4;
-  padding: $spacing-2;
-
-  .filterContainer {
-    display: flex;
-    align-items: center;
-    gap: $spacing-4;
-  }
-
-  .searchContainer {
-    width: 382px;
-    margin-left: $spacing-8;
-  }
-}
-
 .pagination {
   display: flex;
   justify-content: flex-end;
