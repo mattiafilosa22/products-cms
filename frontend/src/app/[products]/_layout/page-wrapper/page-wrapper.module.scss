@@ -1,0 +1,19 @@
+@use "@/styles/variables" as *;
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-6;
+}
+
+.title {
+  line-height: 1;
+}
+
+.actionButtons {
+  display: flex;
+  gap: $spacing-4;
+}
+
+

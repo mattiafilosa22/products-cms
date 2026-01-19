@@ -1,0 +1,8 @@
+@use "@/styles/variables" as *;
+@use "@/styles/layout" as *;
+
+.content {
+  padding: $spacing-6;
+  min-height: calc(100vh - 50px);
+  position: relative;
+}
