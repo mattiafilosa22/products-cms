@@ -85,122 +85,120 @@
     margin-bottom: $spacing-3;
   }
 
-  :global {
-    table {
-      width: 100%;
-      font-size: $spacing-4;
-      border-bottom: 2px solid $table-border;
-      border-spacing: 0;
+  :global(table) {
+    width: 100%;
+    font-size: $spacing-4;
+    border-bottom: 2px solid $table-border;
+    border-spacing: 0;
 
-      thead {
-        tr {
-          th {
-            padding: 0;
-            height: 56px;
-
-            .th-wrapper {
-              padding: 0 20px;
-              display: flex;
-              align-items: center;
-              gap: $spacing-2;
-            }
-          }
-        }
-      }
-
+    thead {
       tr {
-
-        th,
-        td {
-          text-align: left;
-          font-weight: 400;
-        }
-
         th {
-          font-size: $spacing-4;
-          font-weight: 400;
-          line-height: $spacing-6;
-          letter-spacing: -0.32px;
-          vertical-align: middle;
+          padding: 0;
+          height: 56px;
 
-          .icon {
-            margin-right: $spacing-2;
-
-            svg {
-              vertical-align: middle;
-            }
-          }
-        }
-
-        td {
-          border-top: 2px solid $table-border;
-
-          &.actions-wrapper {
-            width: 1px;
-            white-space: nowrap;
-          }
-
-          &>.actions {
-            display: flex;
-
-            button {
-              &:hover {
-                background: $green-400 !important;
-                color: $white !important;
-              }
-            }
-          }
-
-          &.icon {
-            padding: $spacing-3;
-            cursor: pointer;
-          }
-        }
-
-        &.clickable {
-          cursor: pointer;
-
-          &:hover {
-            background-color: $table-row-hover;
-
-            td.status span {
-              // background-color: var(--blue-200);
-            }
-          }
-        }
-      }
-
-      tbody {
-
-        tr,
-        td {
-          font-size: $spacing-4;
-          padding: $spacing-3 20px;
-          width: $table-cell-width;
-
-          a {
-            color: $black;
-          }
-
-          .selected-icon {
+          :global(.th-wrapper) {
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            padding-top: $spacing-1;
+            gap: $spacing-2;
+          }
+        }
+      }
+    }
 
-            &-hidden {
-              visibility: hidden;
-            }
+    tr {
 
-            svg {
-              width: 20px;
-              height: 20px;
+      th,
+      td {
+        text-align: left;
+        font-weight: 400;
+      }
+
+      th {
+        font-size: $spacing-4;
+        font-weight: 400;
+        line-height: $spacing-6;
+        letter-spacing: -0.32px;
+        vertical-align: middle;
+
+        :global(.icon) {
+          margin-right: $spacing-2;
+
+          svg {
+            vertical-align: middle;
+          }
+        }
+      }
+
+      td {
+        border-top: 2px solid $table-border;
+
+        &:global(.actions-wrapper) {
+          width: 1px;
+          white-space: nowrap;
+        }
+
+        &>:global(.actions) {
+          display: flex;
+
+          button {
+            &:hover {
+              background: $green-400 !important;
+              color: $white !important;
             }
           }
+        }
 
-          &.status {
-            padding: 0;
-            width: 150px;
+        &:global(.icon) {
+          padding: $spacing-3;
+          cursor: pointer;
+        }
+      }
+
+      &:global(.clickable) {
+        cursor: pointer;
+
+        &:hover {
+          background-color: $table-row-hover;
+
+          td:global(.status) span {
+            // background-color: var(--blue-200);
           }
+        }
+      }
+    }
+
+    tbody {
+
+      tr,
+      td {
+        font-size: $spacing-4;
+        padding: $spacing-3 20px;
+        width: $table-cell-width;
+
+        a {
+          color: $black;
+        }
+
+        :global(.selected-icon) {
+          display: flex;
+          align-items: center;
+          padding-top: $spacing-1;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        :global(.selected-icon-hidden) {
+          visibility: hidden;
+        }
+
+        &:global(.status) {
+          padding: 0;
+          width: 150px;
         }
       }
     }

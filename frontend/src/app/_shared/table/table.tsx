@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { TableContextProvider } from "./parts/table-context";
 import { TableInner } from "./parts/table-inner";
-import { TableState } from "./table-state";
 import { TableActionConfig } from "./table-action-config";
 import { PaginationData } from "@/api/paginationData";
 

@@ -16,7 +16,7 @@ import IconLoading from "@/assets/loading.svg";
 import IconCaretUp from "@/assets/icons/caret-up.svg";
 import IconCaretDown from "@/assets/icons/caret-down.svg";
 import { TableActionConfig } from "../table-action-config";
-import { AppButton, Modal } from "@/app/_shared/components";
+import { AppButton, Modal, useModalContext } from "@/app/_shared/components";
 import { ModalResult } from "@/app/_shared/components/modal/modal-result";
 
 type ContainerProps<TData> = {
@@ -111,19 +111,50 @@ export function TableInner<TData extends object>({
           size={size}
           disabled={action.disabled?.(rowData) ?? false}
           onClick={() => {
-            action.action?.(rowData);
+            // Only call action if there's no modal
+            if (!action.modalContent && !action.modalContentTitle) {
+              action.action?.(rowData);
+            }
           }}
         />
       );
 
-      if (action.modalContent) {
+      // Check if modal content is provided (either as a function or as title/body)
+      if (action.modalContent || action.modalContentTitle) {
+        // Create a component for simple title/body modals
+        const SimpleModalContent = () => {
+          const { setTitle, setConfirmConfig, tryClose } = useModalContext();
+
+          useEffect(() => {
+            if (action.modalContentTitle) {
+              setTitle(action.modalContentTitle);
+            }
+
+            setConfirmConfig({
+              onClick: () => {
+                action.action?.(rowData);
+                tryClose(true);
+              },
+            });
+          }, [setTitle, setConfirmConfig, tryClose]);
+
+          return action.modalContentBody ? (
+            <p>{action.modalContentBody}</p>
+          ) : null;
+        };
+
         return (
           <Modal
             key={`modal-${index}`}
             trigger={button}
             onClose={(result) => onActionModalClosed(result, action)}
+            style={action.variant === "danger" ? "danger" : "default"}
           >
-            {action.modalContent(rowData)}
+            {action.modalContent ? (
+              action.modalContent(rowData)
+            ) : (
+              <SimpleModalContent />
+            )}
           </Modal>
         );
       }
