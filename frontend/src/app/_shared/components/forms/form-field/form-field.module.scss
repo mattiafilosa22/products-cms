@@ -1,0 +1,57 @@
+@use "@/styles/variables" as *;
+@use '@/styles/colors' as *;
+
+.formField {
+  padding-bottom: 0px;
+
+  .formFieldHeader {
+    display: flex;
+    gap: $spacing-2;
+  }
+
+  .formFieldLabel {
+    display: block;
+    font-size: $font-size-3;
+    line-height: 15px;
+      color: $grey-800;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: $spacing-1;
+  }
+
+  .formFieldError {
+    display: block;
+    font-size: $font-size-3;
+    line-height: $spacing-4;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $color-input-error;
+    margin-top: 1px;
+    height: $spacing-4;
+  }
+
+  .formFieldLangs {
+    display: flex;
+    gap: $spacing-2;
+
+    .formFieldLang {
+      cursor: pointer;
+      padding: $spacing-1 $spacing-3;
+      border: 1px solid $green-400;
+      color: $green-400;
+      border-radius: $spacing-4;
+      font-size: $font-size-3;
+      line-height: 14px;
+      text-transform: uppercase;
+      font-family: var(--font-sf-pro-display);
+      display: flex;
+      gap: $spacing-2;
+
+      &.active {
+        background: $green-400;
+        font-weight: 700;
+        color: white;
+      }
+    }
+  }
+}

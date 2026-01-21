@@ -1,0 +1,32 @@
+@use "@/styles/variables" as *;
+
+.appTextArea {
+  width: 100%;
+
+  &.resize{
+
+    textarea {
+      resize: vertical!important;
+    }
+  }
+
+  textarea {
+    width: 100%;
+    padding: $spacing-3 $spacing-2 $spacing-3 $spacing-3;
+    line-height: $spacing-4;
+    min-height: 80px;
+    font-size: $font-size-4;
+    border-radius: $spacing-2;
+    border: 1px solid $color-input-border;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+    resize: none!important;
+    background-color: transparent;
+
+  }
+
+  &.inputError {
+    textarea {
+      border-color: $color-input-error;
+    }
+  }
+}
