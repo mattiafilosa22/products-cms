@@ -13,7 +13,7 @@ const formatZodError = (errorStr: string) => {
   }
 };
 
-export function useApi<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE") {
+export function useApi<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE", ignoreToast = false) {
   // set state
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<T | null>(null);
@@ -55,7 +55,7 @@ export function useApi<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE"
         headers: input instanceof FormData ? { "Content-Type": undefined } : undefined,
       });
       setData(response.data);
-      toast.success(response.data.message || "Operazione completata");
+      if (!ignoreToast) toast.success(response.data.message || "Operazione completata");
       return response.data;
     } catch (error: any) {
       // get error from response

@@ -3,7 +3,7 @@ import { useApi } from "../useApi";
 import { Product } from "./_type";
 
 export const getProduct = () => {
-  const { data, isLoading, error, execute } = useApi<Product>(`/products/:id`, "GET");
+  const { data, isLoading, error, execute } = useApi<Product>(`/products/:id`, "GET", true);
 
   const getProductById = useCallback((id: string) => execute({ id }), [execute]);
 
