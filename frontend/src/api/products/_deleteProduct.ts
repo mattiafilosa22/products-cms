@@ -1,3 +1,5 @@
+"use client";
+
 import { useApi } from "../useApi";
 import { useCallback } from "react";
 
