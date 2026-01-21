@@ -22,12 +22,6 @@ export const ProductListTable = ({
 }: ProductListTableProps<GetAllProductsRequest>) => {
   // const { deleteProduct, isLoading: isDeletingProduct } = useDeleteProduct();
 
-  const [locationsQueryFilters, setLocationsQueryFilters] =
-    useState<GetAllProductsRequest>({
-      page: 1,
-      limit: 10,
-    });
-
   // Local state to manage data updates after soft delete
   const [localData, setLocalData] = useState<Product[] | undefined>(data);
 

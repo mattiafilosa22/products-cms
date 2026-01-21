@@ -9,6 +9,11 @@ export const getColumns = () => {
       cell: (props) => props.row.original.name,
     },
     {
+      accessorKey: "description",
+      header: () => "Descrizione",
+      cell: (props) => props.row.original.description,
+    },
+    {
       accessorKey: "price",
       header: () => "Prezzo",
       cell: (props) => {
