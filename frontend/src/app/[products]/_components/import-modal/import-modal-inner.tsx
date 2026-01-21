@@ -2,7 +2,7 @@ import { useModalContext } from "@/app/_shared/components/modal/modal-context";
 import { useImportProduct } from "@/api/products/_importProduct";
 import { useEffect, useState } from "react";
 import styles from "./import-modal.module.scss";
-import { InputFile } from "@/app/_shared/components/input-file/input-file";
+import { InputFile } from "@/app/_shared/components/forms/input-file/input-file";
 
 export const ImportModalInner = ({ onSuccess }: { onSuccess?: () => void }) => {
   const { setTitle, setConfirmConfig, tryClose } = useModalContext();

@@ -7,6 +7,8 @@ export const ProductForm = ({ product }: { product: Product | null }) => {
     defaultValues: product || {},
   });
 
+  console.log("defaultValues", form);
+
   return (
     <Form form={form}>
       <FormField name="name" label="Name" placeholder="Name">

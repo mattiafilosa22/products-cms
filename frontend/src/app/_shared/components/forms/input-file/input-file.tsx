@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styles from "./input-file.module.scss";
-import { AppButton } from "../app-button/app-button";
+import { AppButton } from "../../app-button/app-button";
 import IconClose from "@/assets/icons/close.svg";
 import IconCheck from "@/assets/icons/check-mark.svg";
 import IconUpload from "@/assets/icons/upload.svg";

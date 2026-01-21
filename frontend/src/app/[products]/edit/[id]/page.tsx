@@ -12,6 +12,7 @@ export default function EditProductPage({
   const { id } = use(params);
   const { getProductById, isLoading, data } = getProduct();
 
+  console.log("data", data);
   useEffect(() => {
     getProductById(id);
   }, [id]);
