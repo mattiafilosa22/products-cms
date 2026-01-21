@@ -1,6 +1,10 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styles from "./input-file.module.scss";
+import { AppButton } from "../app-button/app-button";
+import IconClose from "@/assets/icons/close.svg";
+import IconCheck from "@/assets/icons/check-mark.svg";
+import IconUpload from "@/assets/icons/upload.svg";
 
 interface InputFileProps {
   onFileChange: (file: File | null) => void;
@@ -76,8 +80,8 @@ export const InputFile = ({
     onFileChange(file);
   };
 
-  const handleRemoveFile = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleRemoveFile = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setSelectedFile(null);
     onFileChange(null);
     if (inputRef.current) {
@@ -118,27 +122,13 @@ export const InputFile = ({
         aria-controls="file-input"
       >
         {selectedFile && (
-          <button
-            type="button"
+          <AppButton
+            variant="custom"
             className={styles.removeButton}
             onClick={handleRemoveFile}
-            title="Rimuovi file"
-            aria-label="Rimuovi file"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
+            icon={IconClose}
+            size="icon"
+          />
         )}
         <input
           id="file-input"
@@ -151,33 +141,9 @@ export const InputFile = ({
         <div className={styles.content}>
           <div className={styles.iconWrapper}>
             {selectedFile ? (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 6L9 17L4 12" />
-              </svg>
+              <IconCheck width={24} height={24} />
             ) : (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
-              </svg>
+              <IconUpload width={24} height={24} />
             )}
           </div>
           <div className={styles.textWrapper}>
@@ -192,7 +158,7 @@ export const InputFile = ({
               <>
                 <span className={styles.title}>Carica un file</span>
                 <span className={styles.subtitle}>
-                  Trascina qui o clicca per selezionare (.csv)
+                  Trascina qui o clicca per selezionare ({accept})
                 </span>
               </>
             )}

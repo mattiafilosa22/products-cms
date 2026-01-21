@@ -2,6 +2,17 @@ import { useState, useCallback } from "react";
 import apiClient from "./apiClient";
 import { toast } from "react-toastify";
 
+const formatZodError = (errorStr: string) => {
+  try {
+    const obj = JSON.parse(errorStr.replace("Validazione fallita: ", ""));
+    return Object.entries(obj)
+      .map(([field, messages]) => `${field}: ${(messages as string[]).join(", ")}`)
+      .join(" | ");
+  } catch {
+    return errorStr;
+  }
+};
+
 export function useApi<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE") {
   // set state
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,16 +52,19 @@ export function useApi<T>(url: string, method: "GET" | "POST" | "PUT" | "DELETE"
         url: finalUrl,
         data: method === "GET" || method === "DELETE" ? undefined : input,
         params: method === "GET" || method === "DELETE" ? remainingParams : undefined,
+        headers: input instanceof FormData ? { "Content-Type": undefined } : undefined,
       });
       setData(response.data);
-      toast.success(response.data.message);
+      toast.success(response.data.message || "Operazione completata");
       return response.data;
     } catch (error: any) {
       // get error from response
       const apiError = error.response?.data || error;
       setError(apiError as Error);
       setData(null);
-      toast.error(apiError.message);
+
+      const errorMessage = apiError.error || apiError.message || "Si è verificato un errore";
+      toast.error(formatZodError(errorMessage));
       return null;
     } finally {
       setIsLoading(false);

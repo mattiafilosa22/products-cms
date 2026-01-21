@@ -7,3 +7,7 @@ export type Product = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type PrivateFileType = {
+  file: File;
+};

@@ -5,6 +5,7 @@ import { getAllProducts } from "@/api/products/_getAllProducts";
 import { ProductListTable } from "./_components/product-list-table/product-list-table";
 import PageWrapper from "./_layout/page-wrapper/page-wrapper";
 import { ImportModal } from "./_components/import-modal/import-modal";
+import { useImportProduct } from "@/api/products/_importProduct";
 
 export default function ProductsPage() {
   const { data, isLoading, error, getProducts } = getAllProducts();
@@ -16,7 +17,9 @@ export default function ProductsPage() {
   return (
     <PageWrapper
       title="Products"
-      actionButton={<ImportModal />}
+      actionButton={
+        <ImportModal onSuccess={() => getProducts({ page: 1, limit: 10 })} />
+      }
     >
       <ProductListTable
         data={data?.data}

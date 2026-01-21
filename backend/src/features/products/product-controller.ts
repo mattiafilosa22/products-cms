@@ -157,7 +157,6 @@ export const importProductsFromCsv = async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ success: false, error: "Nessun file CSV caricato" });
   }
-
   // get file path
   const filePath = req.file.path;
 
@@ -169,14 +168,18 @@ export const importProductsFromCsv = async (req: Request, res: Response) => {
     const result = await bulkCreateProducts(data);
 
     // return result
-    return res.status(201).json({ 
-      message: "Importato!", 
-      count: result.count 
+    return res.status(201).json({
+      success: true,
+      message: "Importato!",
+      count: result.count
     });
-  } catch (error) {
-    console.error("Error during product import:");
-    console.error(error);
-    return res.status(500).json({ success: false, error: "Internal server error" });
+  } catch (error: any) {
+
+    return res.status(500).json({
+      success: false,
+      error: error.message || "Errore senza messaggio",
+      stack: error.stack 
+    });
   } finally {
     // delete file
     if (fs.existsSync(filePath)) {

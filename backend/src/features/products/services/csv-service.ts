@@ -21,8 +21,8 @@ export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
         if (!formattedProduct.success) {
           // block read stream
           stream.destroy();
-          console.error("Invalid product data:", formattedProduct.error.format());
-          reject(formattedProduct.error.format());
+          const errorMessage = JSON.stringify(formattedProduct.error.flatten().fieldErrors);
+          reject(new Error(`Validazione fallita: ${errorMessage}`));
         }
 
         results.push(formattedProduct.data);

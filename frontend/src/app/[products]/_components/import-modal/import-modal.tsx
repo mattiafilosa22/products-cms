@@ -1,10 +1,9 @@
 import { Modal } from "@/app/_shared/components";
 import { AppButton } from "@/app/_shared/components/app-button/app-button";
 import IconPlus from "@/assets/icons/plus.svg";
-import { InputFile } from "@/app/_shared/components/input-file/input-file";
-import styles from "./import-modal.module.scss";
+import { ImportModalInner } from "./import-modal-inner";
 
-export const ImportModal = () => {
+export const ImportModal = ({ onSuccess }: { onSuccess?: () => void }) => {
   return (
     <Modal
       trigger={
@@ -12,17 +11,11 @@ export const ImportModal = () => {
           onClick={() => {}}
           icon={IconPlus}
           variant="primary"
-          label="Aggiungi un prodotto"
+          label="Importa prodotti"
         />
       }
     >
-      <div className={styles.importModal}>
-        <InputFile
-          onFileChange={function (file: File | null): void {
-            // TODO: handle file selection or removal
-          }}
-        />
-      </div>
+      <ImportModalInner onSuccess={onSuccess} />
     </Modal>
   );
 };

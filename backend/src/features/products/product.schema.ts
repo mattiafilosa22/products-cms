@@ -5,11 +5,14 @@ const baseProductSchema = z.object({
   name: z.string().min(1),
   price: z.preprocess(
     (val) => Number(val),
-    z.number().positive()
+    z.number().positive("Il prezzo deve essere maggiore di zero")
   ),
   discountPrice: z.preprocess(
-    (val) => (val === "" || val === undefined ? null : Number(val)),
-    z.number().positive().nullable()
+    (val) => (val === "" || val === undefined || val === null ? null : Number(val)),
+    z.union([
+      z.number().positive("Il prezzo scontato deve essere maggiore di zero"),
+      z.literal(null)
+    ]).nullable()
   )
 });
 
