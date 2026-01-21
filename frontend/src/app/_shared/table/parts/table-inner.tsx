@@ -131,12 +131,12 @@ export function TableInner<TData extends object>({
             }
 
             setConfirmConfig({
-              onClick: () => {
-                action.action?.(rowData);
+              onClick: async () => {
+                await action.action?.(rowData);
                 tryClose(true);
               },
             });
-          }, [setTitle, setConfirmConfig, tryClose]);
+          }, [setTitle, setConfirmConfig, tryClose, action, rowData]);
 
           return action.modalContentBody ? (
             <p>{action.modalContentBody}</p>
@@ -228,6 +228,9 @@ export function TableInner<TData extends object>({
                     >
                       {primaryActionsState.map((action, index) =>
                         getActionButton(action, row.original, index, "icon"),
+                      )}
+                      {secondaryActionsState.map((action, index) =>
+                        getActionButton(action, row.original, index, "md"),
                       )}
                     </div>
                   </td>

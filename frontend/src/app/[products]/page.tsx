@@ -17,9 +17,12 @@ export default function ProductsPage() {
   return (
     <PageWrapper
       title="Products"
-      actionButton={
-        <ImportModal onSuccess={() => getProducts({ page: 1, limit: 10 })} />
-      }
+      actionButtons={[
+        <ImportModal
+          key="import-product-modal"
+          onSuccess={() => getProducts({ page: 1, limit: 10 })}
+        />,
+      ]}
     >
       <ProductListTable
         data={data?.data}

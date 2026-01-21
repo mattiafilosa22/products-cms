@@ -6,6 +6,7 @@ import { getColumns } from "./product-list-table-columns";
 import { getActions } from "./product-list-table-actions";
 import { useRouter } from "next/navigation";
 import { Product } from "@/api/products/_type";
+import { useDeleteProduct } from "@/api/products/_deleteProduct";
 
 interface ProductListTableProps<TTableOptions extends object> {
   data?: Product[];
@@ -20,7 +21,11 @@ export const ProductListTable = ({
   onOptionsChange,
   isDataLoading = false,
 }: ProductListTableProps<GetAllProductsRequest>) => {
-  // const { deleteProduct, isLoading: isDeletingProduct } = useDeleteProduct();
+  const {
+    deleteProduct,
+    isLoading: isDeletingProduct,
+    error,
+  } = useDeleteProduct();
 
   // Local state to manage data updates after soft delete
   const [localData, setLocalData] = useState<Product[] | undefined>(data);
@@ -34,14 +39,30 @@ export const ProductListTable = ({
 
   const onRowClick = useCallback(
     (rowData: Product) => {
-      router.push("/products/view/" + rowData.id);
+      router.push(`/products/view/${rowData.id}`);
     },
     [router],
   );
 
-  const handleEdit = useCallback((event: Product) => {}, []);
+  const handleEdit = useCallback(
+    (event: Product) => {
+      router.push(`/products/edit/${event.id}`);
+    },
+    [router],
+  );
 
-  const handleDelete = useCallback((event: Product) => {}, []);
+  const handleDelete = useCallback(
+    async (event: Product) => {
+      const response = await deleteProduct(event.id);
+      if (response) {
+        onOptionsChange({
+          page: pagination?.page || 1,
+          limit: pagination?.limit || 10,
+        } as any);
+      }
+    },
+    [deleteProduct, onOptionsChange, pagination],
+  );
 
   const columns = useMemo(() => {
     return getColumns();

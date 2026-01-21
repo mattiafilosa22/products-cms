@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import style from "./page-wrapper.module.scss";
 interface ContainerProps {
@@ -20,19 +20,15 @@ const PageWrapper: React.FC<ContainerProps> = ({
     return <div>{children}</div>;
   }
 
-  if (actionButton) {
-    actionButtons = [actionButton];
-  }
-
   return (
     <>
       <div className={`${style.pageHeader}`}>
         {title && <h1 className={style.title}>{title}</h1>}
 
         <div className={style.actionButtons}>
+          {actionButton}
           {actionButtons}
         </div>
-
       </div>
 
       {children}
