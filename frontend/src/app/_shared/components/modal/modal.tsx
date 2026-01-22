@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { cloneElement, isValidElement, JSX, useEffect, useState } from "react";
 import "reactjs-popup/dist/index.css";
 import { ModalProvider } from "./modal-context";
 import { ModalInner } from "./components/modal-inner";
@@ -20,9 +20,13 @@ export const Modal: React.FC<ModalProps> = ({
   style = "default",
   onClose,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const modalRoot = document.getElementById('modal-root') ?? document.body;
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setModalRoot(document.getElementById("modal-root") ?? document.body);
+  }, []);
 
   const handleTriggerClick = () => {
     setIsOpen(true);
@@ -31,24 +35,31 @@ export const Modal: React.FC<ModalProps> = ({
   const closeModal = (result: ModalResult) => {
     setIsOpen(false);
     onClose?.(result);
-  }
+  };
 
   // If a trigger is provided, clone it to add the onClick handler
-  const clonedTrigger = React.cloneElement(trigger as JSX.Element, {
-    onClick: handleTriggerClick,
-  });
+  const clonedTrigger = isValidElement(trigger)
+    ? cloneElement(
+        trigger as React.ReactElement,
+        {
+          onClick: handleTriggerClick,
+        } as React.Attributes,
+      )
+    : trigger;
 
   return (
     <>
       {clonedTrigger}
-      {isOpen && createPortal(
-        <ModalProvider closeModal={closeModal}>
-          <ModalInner size={size} styleButtons={style}>
-            {children}
-          </ModalInner>
-        </ModalProvider>,
-        modalRoot
-      )}
+      {isOpen &&
+        modalRoot &&
+        createPortal(
+          <ModalProvider closeModal={closeModal}>
+            <ModalInner size={size} styleButtons={style}>
+              {children}
+            </ModalInner>
+          </ModalProvider>,
+          modalRoot,
+        )}
     </>
   );
 };
