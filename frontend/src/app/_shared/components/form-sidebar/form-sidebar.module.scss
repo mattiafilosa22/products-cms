@@ -11,18 +11,18 @@
 }
 
 .section {
-  background: white;
+  background: $white;
   padding: $spacing-6;
   border-radius: 4px;
-  border: 1px solid $green-400;
+  border: 1px solid $black;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
   .sectionTitle {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: $spacing-4;
-    color: $text-primary;
-    border-bottom: 1px solid $green-400;
+    color: $black;
+    border-bottom: 1px solid $black;
     padding-bottom: $spacing-2;
   }
 }

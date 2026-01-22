@@ -1,7 +1,7 @@
 // backend/src/api/products/products.routes.ts
 import { Router } from "express";
-import * as ProductController from "../../features/products/product-controller.js";
-import { authMiddleware } from "../middlewares/auth.ts";
+import * as ProductController from "./product-controller.ts";
+import { authMiddleware } from "../../api/middlewares/auth.ts";
 import multer from "multer";
 
 const router = Router();

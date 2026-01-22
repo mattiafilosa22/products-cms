@@ -40,6 +40,24 @@
 
   >div:first-child {
     flex: 1;
-    min-width: 0; // Previene overflow
+    min-width: 0;
+  }
+}
+
+.d {
+  &-flex {
+    display: flex;
+  }
+}
+
+.align-items {
+  &-center {
+    align-items: center;
+  }
+}
+
+.gap {
+  &-3 {
+    gap: 0.75rem;
   }
 }

@@ -7,7 +7,14 @@
     "outDir": "./dist",
     "allowJs": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": false,
-    "rewriteRelativeImportExtensions": true
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "rewriteRelativeImportExtensions": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
   }
 }

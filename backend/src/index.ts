@@ -1,33 +1,32 @@
 import express from "express";
-import prisma from "./core/config/prisma.js";
-import productsRoutes from "./api/products/products-routes.ts";
 import cors from 'cors';
+import prisma from "./lib/prisma.ts";
+import apiRoutes from "./api/routes.ts";
 
 const app = express();
-const PORT = 3008;
+const PORT = process.env.PORT || 3008;
 
+// Middleware globali
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'x-api-key']
 }));
-
 app.use(express.json());
+
+// Punto di ingresso unico per le API
+app.use("/api", apiRoutes);
 
 async function bootstrap() {
   try {
-    console.log("⏳ Connessione al database in corso...");
     await prisma.$connect();
     console.log("✅ Database connesso correttamente!");
-
-    app.use("/api/products", productsRoutes);
 
     app.listen(Number(PORT), "0.0.0.0", () => {
       console.log(`🚀 Server pronto su http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("❌ Errore durante l'avvio:");
-    console.error(error);
+    console.error("❌ Errore durante l'avvio:", error);
     process.exit(1);
   }
 }

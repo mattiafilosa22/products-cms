@@ -1,6 +1,6 @@
 import fs from 'fs';
 import csv from 'csv-parser';
-import { createProductSchema } from '../product.schema.ts';
+import { createProductSchema } from '../../features/products/product.schema.ts';
 
 export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
   return new Promise((resolve, reject) => {

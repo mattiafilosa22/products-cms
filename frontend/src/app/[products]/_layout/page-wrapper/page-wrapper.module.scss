@@ -23,6 +23,7 @@
   border-radius: 4px;
   color: black;
   transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     border-color: $green-400;
