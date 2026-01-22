@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const createProductSchema = z.object({
-  name: z.string().min(1, "Il nome è obbligatorio"),
-  description: z.string().nullable(),
+  name: z.string().min(1, "Il nome è obbligatorio").max(20, "Il nome deve essere lungo al massimo 20 caratteri"),
+  description: z.string().max(200, "La descrizione deve essere lunga al massimo 200 caratteri").nullable(),
   price: z.preprocess(
     (val) => Number(val),
     z.number().positive("Il prezzo deve essere maggiore di zero")
@@ -20,8 +20,8 @@ export const createProductSchema = z.object({
 });
 
 export const updateProductSchema = z.object({
-  name: z.string().min(1).optional(),
-  description: z.string().nullable().optional(),
+  name: z.string().min(1, "Il nome è obbligatorio").max(20, "Il nome deve essere lungo al massimo 20 caratteri").optional(),
+  description: z.string().max(200, "La descrizione deve essere lunga al massimo 200 caratteri").nullable().optional(),
   price: z.preprocess(
     (val) => (val === undefined ? undefined : Number(val)),
     z.number().positive().optional()

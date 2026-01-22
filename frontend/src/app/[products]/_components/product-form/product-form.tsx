@@ -35,7 +35,7 @@ export const ProductForm = ({
         readonly={readonly}
         rules={{ required: true }}
       >
-        <InputText />
+        <InputText maxLength={20} />
       </FormField>
       <FormField
         name="description"
@@ -43,7 +43,7 @@ export const ProductForm = ({
         placeholder="Description"
         readonly={readonly}
       >
-        <TextArea />
+        <TextArea maxLength={200} />
       </FormField>
       <FormField
         name="price"

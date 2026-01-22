@@ -7,7 +7,7 @@ interface ContainerProps extends InputConfig {
   resize?: boolean;
   rows?: number;
   cols?: number;
-  maxlength?: number;
+  maxLength?: number;
 }
 
 export const TextArea: React.FC<ContainerProps> = ({
@@ -22,7 +22,7 @@ export const TextArea: React.FC<ContainerProps> = ({
   readonly = false,
   rows = 8,
   cols = 50,
-  maxlength = 2000,
+  maxLength = 2000,
 }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
@@ -50,7 +50,7 @@ export const TextArea: React.FC<ContainerProps> = ({
         readOnly={readonly}
         rows={rows}
         cols={cols}
-        maxLength={maxlength}
+        maxLength={maxLength}
       />
     </div>
   );
