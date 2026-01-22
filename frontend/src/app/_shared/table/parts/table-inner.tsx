@@ -18,6 +18,7 @@ import IconCaretDown from "@/assets/icons/caret-down.svg";
 import { TableActionConfig } from "../table-action-config";
 import { AppButton, Modal, useModalContext } from "@/app/_shared/components";
 import { ModalResult } from "@/app/_shared/components/modal/modal-result";
+import { TableState } from "../table-state";
 
 type ContainerProps<TData> = {
   pagination?: PaginationData;
@@ -26,6 +27,7 @@ type ContainerProps<TData> = {
   actions: TableActionConfig<TData>[];
   isLoading?: boolean;
   onRowClick?: (rowData: TData) => void;
+  onStateChange?: (state: TableState) => void;
 };
 
 export function TableInner<TData extends object>({
@@ -35,18 +37,18 @@ export function TableInner<TData extends object>({
   actions,
   isLoading = false,
   onRowClick = undefined,
+  onStateChange = undefined,
 }: ContainerProps<TData>) {
   const { changeTableState, tableState } = useTableContext();
 
   const onSortingChange: OnChangeFn<SortingState> = useCallback(
     (updaterOrValue) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      changeTableState((prev: any) => {
+      changeTableState((prev) => {
         const newSorting =
           typeof updaterOrValue === "function"
             ? updaterOrValue(prev.rawSorting ?? [])
             : updaterOrValue;
-        return { ...prev, rawSorting: newSorting };
+        return { ...prev, rawSorting: newSorting } as TableState;
       });
     },
     [changeTableState],
@@ -74,10 +76,14 @@ export function TableInner<TData extends object>({
 
   const handlePageChange = useCallback(
     (selected: number) => {
-      changeTableState((prev) => ({ ...prev, page: selected }));
+      changeTableState((prev) => ({ ...prev, page: selected }) as TableState);
     },
     [changeTableState],
   );
+
+  useEffect(() => {
+    onStateChange?.(tableState);
+  }, [tableState, onStateChange]);
 
   useEffect(() => {
     setPrimaryActionsState(actions.filter((a) => a.type === "primary"));

@@ -4,7 +4,7 @@ import { TableState } from "../table-state";
 
 export interface TableContextValue {
   tableState: TableState;
-  changeTableState: (update: Dispatch<SetStateAction<TableState>>) => void;
+  changeTableState: (update: SetStateAction<TableState>) => void;
 }
 
 interface TableContextProviderProps {
@@ -24,11 +24,9 @@ export const TableContextProvider: FC<TableContextProviderProps> = (props) => {
   const { children } = props;
   const [tableState, setTableState] = useState<TableState>(initialTableState);
 
-  const changeTableState: (cb: Dispatch<SetStateAction<TableState>>) => void =
-    useCallback((update) => {
-      const tableStateUpdated = update(tableState);
-      setTableState(tableStateUpdated as unknown as TableState);
-    }, [tableState]);
+  const changeTableState = useCallback((update: SetStateAction<TableState>) => {
+    setTableState(update);
+  }, []);
 
   return (
     <TableContext.Provider

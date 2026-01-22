@@ -64,6 +64,16 @@ export const ProductListTable = ({
     [deleteProduct, onOptionsChange, pagination],
   );
 
+  const handleStateChange = useCallback(
+    (state: TableState) => {
+      onOptionsChange({
+        page: state.page + 1,
+        limit: pagination?.limit || 10,
+      } as any);
+    },
+    [onOptionsChange, pagination?.limit],
+  );
+
   const columns = useMemo(() => {
     return getColumns();
   }, []);
@@ -80,6 +90,7 @@ export const ProductListTable = ({
       actions={actions}
       isLoading={isDataLoading}
       onRowClick={onRowClick}
+      onStateChange={handleStateChange}
     />
   );
 };
