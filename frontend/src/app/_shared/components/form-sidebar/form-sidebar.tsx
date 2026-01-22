@@ -3,9 +3,9 @@ import styles from "./form-sidebar.module.scss";
 import { AppButton } from "@/app/_shared/components";
 import { DeleteProductButton } from "@/app/[products]/edit/[id]/_components/delete-product-button";
 import { useRouter } from "next/navigation";
+import { useFormContext } from "react-hook-form";
 
 interface FormSidebarProps {
-  onSave?: () => void;
   onDelete?: () => Promise<void>;
   isLoadingSave?: boolean;
   isLoadingDelete?: boolean;
@@ -15,7 +15,6 @@ interface FormSidebarProps {
 }
 
 export const FormSidebar: React.FC<FormSidebarProps> = ({
-  onSave,
   onDelete,
   isLoadingSave = false,
   isLoadingDelete = false,
@@ -24,6 +23,8 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({
   editUrl,
 }) => {
   const router = useRouter();
+  const formContext = useFormContext();
+  const isDirty = formContext ? formContext.formState.isDirty : false;
 
   return (
     <div className={styles.sidebar}>
@@ -44,6 +45,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({
                 loading={isLoadingSave}
                 label="Salva"
                 className="w-100"
+                disabled={!isDirty}
               />
               {isEdit && onDelete && (
                 <DeleteProductButton

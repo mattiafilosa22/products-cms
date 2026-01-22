@@ -26,17 +26,14 @@ export default function EditProductPage({
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="form-container">
-          <div>
-            <ProductForm
-              product={data?.data || null}
-              onSubmit={() => {}}
-              isLoading={isLoading}
-              readonly={true}
-            />
-          </div>
+        <ProductForm
+          product={data?.data || null}
+          onSubmit={() => {}}
+          isLoading={isLoading}
+          readonly={true}
+        >
           <FormSidebar readonly={true} editUrl={`/${products}/edit/${id}`} />
-        </div>
+        </ProductForm>
       )}
     </PageWrapper>
   );

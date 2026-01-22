@@ -55,22 +55,18 @@ export default function EditProductPage({
       {isLoadingUpdateProduct || isLoading ? (
         <Loader />
       ) : (
-        <div className="form-container">
-          <div>
-            <ProductForm
-              product={data?.data || null}
-              onSubmit={onSubmit}
-              isLoading={isLoadingUpdateProduct}
-            />
-          </div>
+        <ProductForm
+          product={data?.data || null}
+          onSubmit={onSubmit}
+          isLoading={isLoadingUpdateProduct}
+        >
           <FormSidebar
-            onSave={() => {}}
             onDelete={onDelete}
             isLoadingSave={isLoadingUpdateProduct}
             isLoadingDelete={isLoadingDeleteProduct}
             isEdit={true}
           />
-        </div>
+        </ProductForm>
       )}
     </PageWrapper>
   );

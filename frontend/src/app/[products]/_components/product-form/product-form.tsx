@@ -1,5 +1,11 @@
 import { Product } from "@/api/products/_type";
-import { Form, FormField, InputPrice, InputText, TextArea } from "@/app/_shared/components/forms";
+import {
+  Form,
+  FormField,
+  InputPrice,
+  InputText,
+  TextArea,
+} from "@/app/_shared/components/forms";
 import { useForm, useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -8,6 +14,7 @@ interface ProductFormProps {
   onSubmit: (data: Product) => void;
   isLoading: boolean;
   readonly?: boolean;
+  children?: React.ReactNode;
 }
 
 export const ProductForm = ({
@@ -15,6 +22,7 @@ export const ProductForm = ({
   onSubmit,
   isLoading,
   readonly = false,
+  children,
 }: ProductFormProps) => {
   const form = useForm<Product>({
     defaultValues: product || {},
@@ -23,7 +31,6 @@ export const ProductForm = ({
   const { watch } = form;
   const price = watch("price");
 
-
   return (
     <Form
       id="product-form"
@@ -31,49 +38,54 @@ export const ProductForm = ({
       initialValues={product}
       onSubmit={onSubmit}
     >
-      <FormField
-        name="name"
-        label="Nome"
-        placeholder="Nome"
-        readonly={readonly}
-        rules={{ required: true }}
-      >
-        <InputText maxLength={20} />
-      </FormField>
-      <FormField
-        name="description"
-        label="Descrizione"
-        placeholder="Descrizione"
-        readonly={readonly}
-      >
-        <TextArea maxLength={200} rows={2} />
-      </FormField>
-      <FormField
-        name="price"
-        label="Prezzo"
-        placeholder="Prezzo"
-        readonly={readonly}
-        rules={{ required: true }}
-      >
-        <InputPrice />
-      </FormField>
-      <FormField
-        name="discountPrice"
-        label="Prezzo Scontato"
-        placeholder="Prezzo Scontato"
-        readonly={readonly}
-        rules={{
-          validate: (value) => {
-            if (!value || !price) return true;
-            if (Number(value) >= Number(price)) {
-              return "Il prezzo scontato deve essere inferiore al prezzo originale";
-            }
-            return true;
-          }
-        }}
-      >
-        <InputPrice />
-      </FormField>
+      <div className="form-container">
+        <div>
+          <FormField
+            name="name"
+            label="Nome"
+            placeholder="Nome"
+            readonly={readonly}
+            rules={{ required: true }}
+          >
+            <InputText maxLength={20} />
+          </FormField>
+          <FormField
+            name="description"
+            label="Descrizione"
+            placeholder="Descrizione"
+            readonly={readonly}
+          >
+            <TextArea maxLength={200} rows={2} />
+          </FormField>
+          <FormField
+            name="price"
+            label="Prezzo"
+            placeholder="Prezzo"
+            readonly={readonly}
+            rules={{ required: true }}
+          >
+            <InputPrice />
+          </FormField>
+          <FormField
+            name="discountPrice"
+            label="Prezzo Scontato"
+            placeholder="Prezzo Scontato"
+            readonly={readonly}
+            rules={{
+              validate: (value) => {
+                if (!value || !price) return true;
+                if (Number(value) >= Number(price)) {
+                  return "Il prezzo scontato deve essere inferiore al prezzo originale";
+                }
+                return true;
+              },
+            }}
+          >
+            <InputPrice />
+          </FormField>
+        </div>
+        {children}
+      </div>
     </Form>
   );
 };
