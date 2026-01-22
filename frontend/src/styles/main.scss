@@ -1,5 +1,4 @@
-// src/styles/main.scss
-
-@import 'variables';
-@import 'base';
-@import 'global';
+@use 'variables' as *;
+@use 'base';
+@use 'global';
+@use 'form';

@@ -1,0 +1,156 @@
+@use 'colors' as *;
+@use 'variables' as *;
+
+.form-grid-columns {
+  display: flex;
+  gap: $spacing-6;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.form-grid-1-column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.registration-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  label {
+    margin-right: $spacing-2;
+    margin-bottom: 0!important;
+    font-family: var(--font-sf-pro-display)!important;
+    font-size: $font-size-4!important;
+    line-height: $spacing-6;
+    letter-spacing: -0.408px!important;
+    font-style: normal!important;
+    font-weight: 400!important;
+    line-height: $spacing-6;
+    text-decoration-style: solid!important;
+    text-decoration-skip-ink: none!important;
+    text-decoration-thickness: auto!important;
+    text-underline-offset: auto!important;
+    text-underline-position: from-font!important;
+    text-transform: none!important;
+  }
+}
+
+.readonly-field {
+  background-color: transparent !important;
+  border: none !important;
+  cursor: default;
+  user-select: none;
+
+  > div:first-child {
+    padding-left: 0 !important;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    user-select: none !important;
+    pointer-events: none !important;
+    padding: 0 !important;
+  }
+
+  textarea {
+    resize: none !important;
+    overflow: hidden !important;
+
+    &:focus-visible {
+      border: none !important;
+    }
+  }
+
+  select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button,
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none !important;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+a:focus-within {
+  box-shadow: 0 0 0 2px $black !important;
+  border-radius: $radius-1!important;
+  transition: box-shadow 150ms ease!important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+
+/*
+ * Sovrascrive lo stile di default dell'autocomplete del browser
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+
+    /* 1. Il trucco del Box Shadow:
+     * Applica un'ombra interna (inset) molto grande che copre
+     * lo sfondo blu. Cambia 'white' con il colore di sfondo
+     * che desideri per il tuo input (es. #f8f9fa).
+     */
+    -webkit-box-shadow: 0 0 0 30px $white inset !important;
+
+    /* 2. (Opzionale) Forzare il colore del testo:
+     * A volte l'autocomplete cambia anche il colore del testo (es. in nero).
+     * Usa '-webkit-text-fill-color' per forzare il tuo colore.
+     * Sostituisci '#000' (nero) con il colore del testo che usi.
+     */
+    -webkit-text-fill-color: $black !important;
+
+    /* 3. (Opzionale) Hack della transizione:
+     * Questo dice al browser di "ritardare" l'applicazione
+     * del suo stile di sfondo per un tempo lunghissimo (5000s),
+     * prevenendo il flash blu.
+     */
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+
+    /* * Questa ombra interna SI ADATTA
+     * alla tua 'border-radius',
+     * risolvendo il problema degli angoli.
+     * Cambia 'white' con il colore di sfondo del tuo input.
+     */
+    -webkit-box-shadow: 0 0 0 30px $white inset !important;
+
+    -webkit-text-fill-color: $black !important;
+}
+
+
+.custom-select__single-value {
+  font-size: var(--size-label-m, 12px);
+  font-style: normal;
+  font-weight: 600;
+  line-height: $spacing-4;
+  letter-spacing: -0.12px;
+  text-transform: uppercase;
+}

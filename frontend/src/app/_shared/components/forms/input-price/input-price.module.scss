@@ -1,0 +1,59 @@
+@use "@/styles/variables" as *;
+@use "@/styles/layout" as *;
+@use '@/styles/colors' as *;
+
+.appInputPrice {
+  width: 100%;
+
+  .inputContainer {
+    position: relative;
+    background: $color-input-background;
+    padding: 0 $spacing-1;
+
+    display: flex;
+    gap: $spacing-2;
+    justify-content: stretch;
+    align-items: center;
+
+    border-radius: 14px;
+    border: 1px solid $interactive-base-default;
+
+    .prefix {
+      font-size: $font-size-4;
+      color: $black;
+      white-space: nowrap;
+    }
+
+    input {
+      border-radius: $spacing-2;
+      outline: none;
+      height: 46px;
+      padding: $spacing-3 0 $spacing-3 $spacing-3;
+      border: none;
+      font-size: $font-size-4;
+      color:  $black;
+      background: $color-input-background;
+      flex: 1;
+    }
+
+    .prefix + input {
+      padding-left: 0;
+    }
+
+    .inputIcon {
+      margin: 0 $spacing-2;
+    }
+
+    &.inputError {
+      border-color: $color-input-error;
+    }
+
+    &.skinny {
+
+      input {
+        height: $spacing-10;
+        padding: $spacing-2 0 $spacing-2 $spacing-3;
+      }
+    }
+  }
+}
