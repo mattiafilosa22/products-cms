@@ -62,7 +62,7 @@ export default function EditProductPage({
             />
           </div>
           <FormSidebar
-            onSave={() => {}} // Not strictly needed because the button is type submit and linked by form id
+            onSave={() => {}}
             onDelete={onDelete}
             isLoadingSave={isLoadingUpdateProduct}
             isLoadingDelete={isLoadingDeleteProduct}

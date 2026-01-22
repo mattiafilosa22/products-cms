@@ -7,12 +7,14 @@ interface ProductFormProps {
   product: Product | null;
   onSubmit: (data: Product) => void;
   isLoading: boolean;
+  readonly?: boolean;
 }
 
 export const ProductForm = ({
   product,
   onSubmit,
   isLoading,
+  readonly = false,
 }: ProductFormProps) => {
   const router = useRouter();
   const form = useForm<Product>({
@@ -26,23 +28,35 @@ export const ProductForm = ({
       initialValues={product}
       onSubmit={onSubmit}
     >
-      <FormField name="name" label="Name" placeholder="Name">
+      <FormField
+        name="name"
+        label="Name"
+        placeholder="Name"
+        readonly={readonly}
+      >
         <InputText />
       </FormField>
       <FormField
         name="description"
         label="Description"
         placeholder="Description"
+        readonly={readonly}
       >
         <InputText />
       </FormField>
-      <FormField name="price" label="Price" placeholder="Price">
+      <FormField
+        name="price"
+        label="Price"
+        placeholder="Price"
+        readonly={readonly}
+      >
         <InputText />
       </FormField>
       <FormField
         name="discountPrice"
         label="Discount Price"
         placeholder="Discount Price"
+        readonly={readonly}
       >
         <InputText />
       </FormField>
