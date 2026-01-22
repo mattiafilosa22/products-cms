@@ -3,6 +3,10 @@ import { z } from "zod";
 // Base schema without refinement
 const baseProductSchema = z.object({
   name: z.string().min(1),
+  description: z.preprocess(
+    (val) => (val === "" || val === undefined || val === null ? null : val),
+    z.string().nullable()
+  ),
   price: z.preprocess(
     (val) => Number(val),
     z.number().positive("Il prezzo deve essere maggiore di zero")

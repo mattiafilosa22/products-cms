@@ -1,6 +1,6 @@
 import { Product } from "@/api/products/_type";
 import { AppButton } from "@/app/_shared/components";
-import { Form, FormField, InputPrice, InputText } from "@/app/_shared/components/forms";
+import { Form, FormField, InputPrice, InputText, TextArea } from "@/app/_shared/components/forms";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 interface ProductFormProps {
@@ -33,6 +33,7 @@ export const ProductForm = ({
         label="Name"
         placeholder="Name"
         readonly={readonly}
+        rules={{ required: true }}
       >
         <InputText />
       </FormField>
@@ -42,13 +43,14 @@ export const ProductForm = ({
         placeholder="Description"
         readonly={readonly}
       >
-        <InputText />
+        <TextArea />
       </FormField>
       <FormField
         name="price"
         label="Price"
         placeholder="Price"
         readonly={readonly}
+        rules={{ required: true }}
       >
         <InputPrice />
       </FormField>

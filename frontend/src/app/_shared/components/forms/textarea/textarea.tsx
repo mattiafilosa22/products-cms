@@ -28,21 +28,23 @@ export const TextArea: React.FC<ContainerProps> = ({
     const val = e.target.value;
 
     onChange?.(val);
-  }
+  };
 
   const handleBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
 
     onBlur?.(val);
-  }
+  };
 
   return (
-    <div className={`${styles.appTextArea} ${resize ? "resize" : ""} ${readonly ? "readonly-field" : ""} ${error ? styles.inputError : ""}`}>
+    <div
+      className={`${styles.appTextArea} ${resize ? "resize" : ""} ${readonly ? "readonly-field" : ""} ${error ? styles.inputError : ""}`}
+    >
       <textarea
         id={name}
         placeholder={placeholder}
         ref={ref}
-        value={value}
+        value={value ?? ""}
         onChange={handleChange}
         onBlur={handleBlur}
         readOnly={readonly}
