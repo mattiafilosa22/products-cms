@@ -15,7 +15,7 @@ export default function ProductsPage() {
 
   return (
     <PageWrapper
-      title="Products"
+      title="Prodotti"
       actionButtons={[
         <ImportModal
           key="import-product-modal"

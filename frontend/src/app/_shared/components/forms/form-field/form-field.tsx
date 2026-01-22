@@ -83,7 +83,7 @@ export const FormField = ({
     if (rules?.required === true) {
       return {
         ...rules,
-        required: `${labelValue} ${("Common.fieldIsRequired")}`,
+        required: `${labelValue} è obbligatorio`,
       };
     }
 

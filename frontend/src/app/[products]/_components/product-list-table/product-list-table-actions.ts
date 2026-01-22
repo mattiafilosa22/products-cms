@@ -21,8 +21,8 @@ export const getActions = (
     {
       key: 'delete',
       label: "Common.action_delete",
-      modalContentTitle: 'Common.action_delete',
-      modalContentBody: 'Common.modal_delete_content',
+      modalContentTitle: 'Elimina',
+      modalContentBody: 'Sei sicuro di voler eliminare questo prodotto?',
       icon: IconBin,
       action: handleDelete,
       type: 'secondary',

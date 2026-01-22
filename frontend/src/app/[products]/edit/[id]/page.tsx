@@ -51,7 +51,7 @@ export default function EditProductPage({
   };
 
   return (
-    <PageWrapper title={`Edit Product ${id}`} backUrl={`/${products}`}>
+    <PageWrapper title="Modifica prodotto" backUrl={`/${products}`}>
       {isLoadingUpdateProduct || isLoading ? (
         <Loader />
       ) : (

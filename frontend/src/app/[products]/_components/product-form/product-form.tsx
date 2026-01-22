@@ -1,8 +1,8 @@
 import { Product } from "@/api/products/_type";
-import { AppButton } from "@/app/_shared/components";
 import { Form, FormField, InputPrice, InputText, TextArea } from "@/app/_shared/components/forms";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 interface ProductFormProps {
   product: Product | null;
   onSubmit: (data: Product) => void;
@@ -16,10 +16,13 @@ export const ProductForm = ({
   isLoading,
   readonly = false,
 }: ProductFormProps) => {
-  const router = useRouter();
   const form = useForm<Product>({
     defaultValues: product || {},
   });
+
+  const { watch } = form;
+  const price = watch("price");
+
 
   return (
     <Form
@@ -30,8 +33,8 @@ export const ProductForm = ({
     >
       <FormField
         name="name"
-        label="Name"
-        placeholder="Name"
+        label="Nome"
+        placeholder="Nome"
         readonly={readonly}
         rules={{ required: true }}
       >
@@ -39,16 +42,16 @@ export const ProductForm = ({
       </FormField>
       <FormField
         name="description"
-        label="Description"
-        placeholder="Description"
+        label="Descrizione"
+        placeholder="Descrizione"
         readonly={readonly}
       >
-        <TextArea maxLength={200} />
+        <TextArea maxLength={200} rows={2} />
       </FormField>
       <FormField
         name="price"
-        label="Price"
-        placeholder="Price"
+        label="Prezzo"
+        placeholder="Prezzo"
         readonly={readonly}
         rules={{ required: true }}
       >
@@ -56,9 +59,18 @@ export const ProductForm = ({
       </FormField>
       <FormField
         name="discountPrice"
-        label="Discount Price"
-        placeholder="Discount Price"
+        label="Prezzo Scontato"
+        placeholder="Prezzo Scontato"
         readonly={readonly}
+        rules={{
+          validate: (value) => {
+            if (!value || !price) return true;
+            if (Number(value) >= Number(price)) {
+              return "Il prezzo scontato deve essere inferiore al prezzo originale";
+            }
+            return true;
+          }
+        }}
       >
         <InputPrice />
       </FormField>

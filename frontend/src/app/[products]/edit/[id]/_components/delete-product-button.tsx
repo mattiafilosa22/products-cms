@@ -17,7 +17,7 @@ const DeleteModalContent = ({
   const { setTitle, setConfirmConfig, tryClose } = useModalContext();
 
   useEffect(() => {
-    setTitle("Common.action_delete");
+    setTitle("Elimina prodotto");
 
     setConfirmConfig({
       onClick: async () => {
@@ -27,7 +27,7 @@ const DeleteModalContent = ({
     });
   }, [setTitle, setConfirmConfig, tryClose, onDelete]);
 
-  return <p>Common.modal_delete_content</p>;
+  return <p>Sei sicuro di voler cancellare?</p>;
 };
 
 export const DeleteProductButton = ({
@@ -37,7 +37,7 @@ export const DeleteProductButton = ({
 }: DeleteProductButtonProps) => {
   const trigger = (
     <AppButton variant="danger" className={className} loading={isLoading}>
-      Delete
+      Cancella
     </AppButton>
   );
 

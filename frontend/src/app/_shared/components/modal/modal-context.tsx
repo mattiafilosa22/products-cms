@@ -43,8 +43,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({
   closeModal 
 }) => {
 
-  const defaultCancelButton = { label: "Cancel", disabled: false, loading: false, onClick: null };
-  const defaultConfirmButton = { label: "Confirm", disabled: false, loading: false, onClick: null };
+  const defaultCancelButton = { label: "Annulla", disabled: false, loading: false, onClick: null };
+  const defaultConfirmButton = { label: "Conferma", disabled: false, loading: false, onClick: null };
 
   const [cancelButtonState, setCancelButtonState] = useState<ButtonConfig>(defaultCancelButton);
   const [confirmButtonState, setConfirmButtonState] = useState<ButtonConfig>(defaultConfirmButton);

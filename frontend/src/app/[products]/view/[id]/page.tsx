@@ -22,7 +22,7 @@ export default function EditProductPage({
   }, [id]);
 
   return (
-    <PageWrapper title={`View Product ${id}`} backUrl={`/${products}`}>
+    <PageWrapper title="Visualizza prodotto" backUrl={`/${products}`}>
       {isLoading ? (
         <Loader />
       ) : (
