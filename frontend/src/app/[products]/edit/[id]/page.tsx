@@ -3,23 +3,73 @@
 import { getProduct } from "@/api/products/_getProduct";
 import { useEffect, use } from "react";
 import { ProductForm } from "../../_components/product-form/product-form";
+import { Product } from "@/api/products/_type";
+import { useUpdateProduct } from "@/api/products/_updateProduct";
+import PageWrapper from "../../_layout/page-wrapper/page-wrapper";
+import { Loader } from "@/app/_shared/components";
+import { useRouter } from "next/navigation";
+import { useDeleteProduct } from "@/api/products/_deleteProduct";
+import { FormSidebar } from "@/app/_shared/components/form-sidebar/form-sidebar";
 
 export default function EditProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; products: string }>;
 }) {
-  const { id } = use(params);
+  const router = useRouter();
+  const { id, products } = use(params);
   const { getProductById, isLoading, data } = getProduct();
+  const {
+    updateProduct,
+    data: dataUpdateProduct,
+    isLoading: isLoadingUpdateProduct,
+  } = useUpdateProduct();
+
+  const { deleteProduct, isLoading: isLoadingDeleteProduct } =
+    useDeleteProduct();
 
   useEffect(() => {
     getProductById(id);
   }, [id]);
 
+  const onSubmit = async (data: Product) => {
+    try {
+      await updateProduct(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      await deleteProduct(Number(id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div>
-      <h2>Edit Product {id}</h2>
-      <ProductForm product={data?.data || null} />
-    </div>
+    <PageWrapper title={`Edit Product ${id}`} backUrl={`/${products}`}>
+      {isLoadingUpdateProduct || isLoading ? (
+        <Loader />
+      ) : (
+        <div className="form-container">
+          <div>
+            <ProductForm
+              product={data?.data || null}
+              onSubmit={onSubmit}
+              isLoading={isLoadingUpdateProduct}
+            />
+          </div>
+          <FormSidebar
+            onSave={() => {}} // Not strictly needed because the button is type submit and linked by form id
+            onDelete={onDelete}
+            isLoadingSave={isLoadingUpdateProduct}
+            isLoadingDelete={isLoadingDeleteProduct}
+            isEdit={true}
+          />
+        </div>
+      )}
+    </PageWrapper>
   );
 }

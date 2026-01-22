@@ -1,4 +1,5 @@
 @use "@/styles/variables" as *;
+@use "@/styles/colors" as *;
 
 .pageHeader {
   display: flex;
@@ -16,4 +17,16 @@
   gap: $spacing-4;
 }
 
+.backButton {
+  background: white;
+  border: 1px solid $green-400;
+  border-radius: 4px;
+  color: black;
+  transition: all 0.2s ease;
 
+  &:hover {
+    border-color: $green-400;
+    color: $green-400;
+    transform: translateX(-2px);
+  }
+}

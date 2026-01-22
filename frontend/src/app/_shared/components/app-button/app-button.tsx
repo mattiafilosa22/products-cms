@@ -18,6 +18,7 @@ type AppButtonProps = BaseAction & {
   loading?: boolean;
   disabled?: boolean;
   className?: string;
+  form?: string;
 };
 
 export const AppButton: React.FC<React.PropsWithChildren<AppButtonProps>> = ({
@@ -32,6 +33,7 @@ export const AppButton: React.FC<React.PropsWithChildren<AppButtonProps>> = ({
   disabled = false,
   onClick = undefined,
   className = "",
+  form = undefined,
 }) => {
   const Icon = icon;
 
@@ -49,6 +51,7 @@ export const AppButton: React.FC<React.PropsWithChildren<AppButtonProps>> = ({
   return (
     <button
       type={type}
+      form={form}
       className={combinedClassName}
       disabled={disabled}
       onClick={handleClick}

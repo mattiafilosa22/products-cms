@@ -1,6 +1,5 @@
 // src/styles/main.scss
 
-@use 'variables';
-
-@use 'base';
-
+@import 'variables';
+@import 'base';
+@import 'global';

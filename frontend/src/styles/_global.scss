@@ -1,0 +1,45 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.justify {
+  &-content {
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
+    }
+
+    &-center {
+      justify-content: center;
+    }
+
+    &-between {
+      justify-content: space-between;
+    }
+
+    &-around {
+      justify-content: space-around;
+    }
+
+    &-evenly {
+      justify-content: space-evenly;
+    }
+  }
+}
+
+.form-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  width: 100%;
+
+  >div:first-child {
+    flex: 1;
+    min-width: 0; // Previene overflow
+  }
+}

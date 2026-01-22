@@ -1,4 +1,9 @@
-import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  UseFormReturn,
+} from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useEffect } from "react";
 
@@ -8,6 +13,7 @@ export type FormProps<T extends FieldValues> = {
   onSubmit?: SubmitHandler<T>;
   className?: string;
   initialValues: T | null;
+  id?: string;
 };
 
 export const Form = <T extends FieldValues = FieldValues>({
@@ -16,8 +22,8 @@ export const Form = <T extends FieldValues = FieldValues>({
   onSubmit,
   className = "",
   initialValues,
+  id,
 }: FormProps<T>) => {
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -32,10 +38,10 @@ export const Form = <T extends FieldValues = FieldValues>({
 
   return (
     <FormProvider {...form}>
-      <form noValidate onSubmit={handleSubmit} className={className}>
+      <form id={id} noValidate onSubmit={handleSubmit} className={className}>
         {children}
       </form>
-      <DevTool control={form.control} /> 
+      <DevTool control={form.control} />
     </FormProvider>
   );
 };
