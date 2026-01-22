@@ -1,11 +1,13 @@
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useEffect } from "react";
 
 export type FormProps<T extends FieldValues> = {
   children: React.ReactNode;
   form: UseFormReturn<T, any, T>;
   onSubmit?: SubmitHandler<T>;
   className?: string;
+  initialValues: T | null;
 };
 
 export const Form = <T extends FieldValues = FieldValues>({
@@ -13,6 +15,7 @@ export const Form = <T extends FieldValues = FieldValues>({
   form,
   onSubmit,
   className = "",
+  initialValues,
 }: FormProps<T>) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,6 +23,12 @@ export const Form = <T extends FieldValues = FieldValues>({
 
     onSubmit && form.handleSubmit(onSubmit)();
   };
+
+  useEffect(() => {
+    if (initialValues) {
+      form.reset(initialValues);
+    }
+  }, [initialValues, form]);
 
   return (
     <FormProvider {...form}>

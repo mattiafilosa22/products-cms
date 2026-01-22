@@ -12,7 +12,6 @@ export default function EditProductPage({
   const { id } = use(params);
   const { getProductById, isLoading, data } = getProduct();
 
-  console.log("data", data);
   useEffect(() => {
     getProductById(id);
   }, [id]);
@@ -20,7 +19,7 @@ export default function EditProductPage({
   return (
     <div>
       <h2>Edit Product {id}</h2>
-      <ProductForm product={data} />
+      <ProductForm product={data?.data || null} />
     </div>
   );
 }
