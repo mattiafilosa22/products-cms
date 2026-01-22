@@ -8,8 +8,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
+    const search = req.query.search as string || "";
 
-    const { products, total } = await productService.findAllProducts(page, limit);
+    const { products, total } = await productService.findAllProducts(page, limit, search);
 
     return res.status(200).json({
       success: true,

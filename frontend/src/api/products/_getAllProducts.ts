@@ -7,6 +7,7 @@ import { Product } from "./_type";
 export type GetAllProductsRequest = {
   page?: number;
   limit?: number;
+  search?: string;
 };
 
 export type GetAllProductsResponse = {
