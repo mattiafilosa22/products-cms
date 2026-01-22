@@ -35,6 +35,7 @@ export default function EditProductPage({
   const onSubmit = async (data: Product) => {
     try {
       await updateProduct(data);
+      router.push("/products");
     } catch (error) {
       console.error(error);
     }
@@ -43,6 +44,7 @@ export default function EditProductPage({
   const onDelete = async () => {
     try {
       await deleteProduct(Number(id));
+      router.push("/products");
     } catch (error) {
       console.error(error);
     }

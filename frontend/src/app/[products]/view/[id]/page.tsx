@@ -3,12 +3,9 @@
 import { getProduct } from "@/api/products/_getProduct";
 import { useEffect, use } from "react";
 import { ProductForm } from "../../_components/product-form/product-form";
-import { Product } from "@/api/products/_type";
-import { useUpdateProduct } from "@/api/products/_updateProduct";
 import PageWrapper from "../../_layout/page-wrapper/page-wrapper";
 import { Loader } from "@/app/_shared/components";
 import { useRouter } from "next/navigation";
-import { useDeleteProduct } from "@/api/products/_deleteProduct";
 import { FormSidebar } from "@/app/_shared/components/form-sidebar/form-sidebar";
 
 export default function EditProductPage({

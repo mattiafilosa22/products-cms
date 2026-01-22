@@ -1,0 +1,19 @@
+@use '@/styles/variables' as *;
+@use '@/styles/colors' as *;
+
+.priceWrapper {
+  display: flex;
+  gap: $spacing-2;
+  align-items: center;
+}
+
+.discountPrice {
+  color: $green-400;
+  font-weight: 500;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: $grey-400;
+  font-size: $font-size-small;
+}
