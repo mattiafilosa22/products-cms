@@ -26,23 +26,37 @@ export const findAllProducts = async (page: number, limit: number, search: strin
   return { products, total };
 };
 
-export const findProductById = (id: number) => {
+export const findProductById = async (id: number) => {
   return prisma.product.findUnique({ where: { id } });
 };
 
-export const createNewProduct = (data: Prisma.ProductCreateInput) => {
+export const createNewProduct = async (data: any) => {
   return prisma.product.create({ data });
 };
 
-export const updateExistingProduct = (id: number, data: Prisma.ProductUpdateInput) => {
-  return prisma.product.update({ where: { id }, data });
+export const updateExistingProduct = async (id: number, data: any) => {
+  try {
+    return await prisma.product.update({ where: { id }, data });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+      throw new Error("PRODUCT_NOT_FOUND");
+    }
+    throw error;
+  }
 };
 
-export const removeProduct = (id: number) => {
-  return prisma.product.delete({ where: { id } });
+export const removeProduct = async (id: number) => {
+  try {
+    return await prisma.product.delete({ where: { id } });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+      throw new Error("PRODUCT_NOT_FOUND");
+    }
+    throw error;
+  }
 };
 
-export const bulkCreateProducts = (data: any[]) => {
+export const bulkCreateProducts = async (data: any[]) => {
   return prisma.product.createMany({
     data,
     skipDuplicates: true

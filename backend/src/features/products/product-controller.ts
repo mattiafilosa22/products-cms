@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as productService from "./product-service.ts";
-import { createProductSchema, updateProductSchema, CreateProductInput } from "./product.schema.ts";
+import { createProductSchema, updateProductSchema } from "./product.schema.ts";
 import fs from "fs";
 import { parseProductsFromCsv } from "../../shared/utils/csv-parser.ts";
 
@@ -18,15 +18,16 @@ export const getAllProducts = async (req: Request, res: Response) => {
       pagination: { page, limit, total }
     });
   } catch (error) {
-    return res.status(500).json({ success: false, error: "Internal server error" });
+    return res.status(500).json({ success: false, error: "Errore interno del server" });
   }
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const validation = updateProductSchema.safeParse(req.body);
+    if (isNaN(id)) return res.status(400).json({ success: false, error: "ID non valido" });
 
+    const validation = updateProductSchema.safeParse(req.body);
     if (!validation.success) {
       return res.status(400).json({ success: false, errors: validation.error.format() });
     }
@@ -34,10 +35,10 @@ export const updateProduct = async (req: Request, res: Response) => {
     const product = await productService.updateExistingProduct(id, validation.data);
     return res.status(200).json({ success: true, data: product });
   } catch (error: any) {
-    if (error.code === 'P2025') {
-      return res.status(404).json({ success: false, error: "Product not found" });
+    if (error.message === "PRODUCT_NOT_FOUND") {
+      return res.status(404).json({ success: false, error: "Prodotto non trovato" });
     }
-    return res.status(500).json({ success: false, error: "Internal server error" });
+    return res.status(500).json({ success: false, error: "Errore durante l'aggiornamento" });
   }
 };
 
@@ -62,7 +63,7 @@ export const createProduct = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, errors: validation.error.format() });
     }
 
-    const product = await productService.createNewProduct(validation.data as any);
+    const product = await productService.createNewProduct(validation.data);
     return res.status(201).json({ success: true, data: product });
   } catch (error) {
     return res.status(500).json({ success: false, error: "Errore durante la creazione" });
@@ -72,10 +73,14 @@ export const createProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ success: false, error: "ID non valido" });
+
     await productService.removeProduct(id);
     return res.status(200).json({ success: true, message: "Eliminato correttamente" });
   } catch (error: any) {
-    if (error.code === 'P2025') return res.status(404).json({ success: false, error: "Prodotto non trovato" });
+    if (error.message === "PRODUCT_NOT_FOUND") {
+      return res.status(404).json({ success: false, error: "Prodotto non trovato" });
+    }
     return res.status(500).json({ success: false, error: "Errore durante l'eliminazione" });
   }
 };
@@ -86,9 +91,9 @@ export const importProductsFromCsv = async (req: Request, res: Response) => {
 
   try {
     const data = await parseProductsFromCsv(filePath);
+    if (!data) return res.status(400).json({ success: false, error: "File non valido" });
 
     const result = await productService.bulkCreateProducts(data);
-
     return res.status(201).json({ success: true, count: result.count });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: error.message });
