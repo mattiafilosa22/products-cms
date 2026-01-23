@@ -6,9 +6,11 @@ export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
   return new Promise((resolve, reject) => {
     const results: any[] = [];
 
+    let rowCounter = 1; // Consider header as row 1, data starts at row 2
     const stream = fs.createReadStream(filePath)
       .pipe(csv())
       .on('data', (data) => {
+        rowCounter++;
         // map and validate data
         const formattedProduct = createProductSchema.safeParse({
           name: data.name,
@@ -22,7 +24,7 @@ export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
           // block read stream
           stream.destroy();
           const errorMessage = JSON.stringify(formattedProduct.error.flatten().fieldErrors);
-          reject(new Error(`Validazione fallita: ${errorMessage}`));
+          reject(new Error(`Errore alla riga ${rowCounter}: Validazione fallita: ${errorMessage}`));
         }
 
         results.push(formattedProduct.data);

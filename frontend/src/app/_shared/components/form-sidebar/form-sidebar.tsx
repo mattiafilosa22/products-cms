@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./form-sidebar.module.scss";
 import { AppButton } from "@/app/_shared/components";
-import { DeleteProductButton } from "@/app/[products]/edit/[id]/_components/delete-product-button";
+import { DeleteProductButton } from "@/app/products/edit/[id]/_components/delete-product-button";
 import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 

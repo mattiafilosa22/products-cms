@@ -11,10 +11,10 @@ import { FormSidebar } from "@/app/_shared/components/form-sidebar/form-sidebar"
 export default function EditProductPage({
   params,
 }: {
-  params: Promise<{ id: string; products: string }>;
+  params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
-  const { id, products } = use(params);
+  const { id } = use(params);
   const { getProductById, isLoading, data } = getProduct();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function EditProductPage({
   }, [id]);
 
   return (
-    <PageWrapper title="Visualizza prodotto" backUrl={`/${products}`}>
+    <PageWrapper title="Visualizza prodotto" backUrl="/products">
       {isLoading ? (
         <Loader />
       ) : (
@@ -32,7 +32,7 @@ export default function EditProductPage({
           isLoading={isLoading}
           readonly={true}
         >
-          <FormSidebar readonly={true} editUrl={`/${products}/edit/${id}`} />
+          <FormSidebar readonly={true} editUrl={`/products/edit/${id}`} />
         </ProductForm>
       )}
     </PageWrapper>

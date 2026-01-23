@@ -14,10 +14,10 @@ import { FormSidebar } from "@/app/_shared/components/form-sidebar/form-sidebar"
 export default function EditProductPage({
   params,
 }: {
-  params: Promise<{ id: string; products: string }>;
+  params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
-  const { id, products } = use(params);
+  const { id } = use(params);
   const { getProductById, isLoading, data } = getProduct();
   const {
     updateProduct,
@@ -51,7 +51,7 @@ export default function EditProductPage({
   };
 
   return (
-    <PageWrapper title="Modifica prodotto" backUrl={`/${products}`}>
+    <PageWrapper title="Modifica prodotto" backUrl="/products">
       {isLoadingUpdateProduct || isLoading ? (
         <Loader />
       ) : (

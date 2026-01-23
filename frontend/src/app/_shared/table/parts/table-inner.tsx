@@ -59,6 +59,7 @@ export function TableInner<TData extends object>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualSorting: true,
+    enableSorting: false,
     state: {
       sorting: tableState.rawSorting ?? [],
     },
@@ -179,25 +180,13 @@ export function TableInner<TData extends object>({
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th key={header.id}>
-                    <div
-                      className="th-wrapper"
-                      onClick={header.column.getToggleSortingHandler()}
-                      style={{
-                        cursor: header.column.getCanSort()
-                          ? "pointer"
-                          : "default",
-                      }}
-                    >
+                    <div className="th-wrapper">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
                             header.getContext(),
                           )}
-                      {{
-                        asc: <IconCaretUp />,
-                        desc: <IconCaretDown />,
-                      }[header.column.getIsSorted() as string] ?? null}
                     </div>
                   </th>
                 ))}

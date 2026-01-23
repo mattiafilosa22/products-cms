@@ -1,0 +1,186 @@
+{
+  "info": {
+    "_postman_id": "019150e4-60f5-4714-99b2-c5ee1969cae9",
+    "name": "ProductCMS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40070720"
+  },
+  "item": [
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "GET Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/products/45",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "products",
+                "45"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/products",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Private",
+      "item": [
+        {
+          "name": "CREATE Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{ADMIN_API_KEY}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Prodotto-nuovo\",\n    \"description\": \"\",\n    \"price\": \"100\",\n    \"discountPrice\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{ADMIN_API_KEY}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test124\",\n    \"description\": \"\",\n    \"price\": \"100\",\n    \"discountPrice\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products/43",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "products",
+                "43"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{ADMIN_API_KEY}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/products/46",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "products",
+                "46"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "IMPORT File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{ADMIN_API_KEY}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "acbef5c9-9331-4bf2-86df-3f22e6e799a0",
+                  "src": "ruPDMTMpp/product-test.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products/import?file",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "",
+                "products",
+                "import"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

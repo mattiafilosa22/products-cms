@@ -14,6 +14,47 @@ Dalla root del progetto, eseguire il comando:
 docker compose up --build
 ```
 
+## Dati di Test (Seeding)
+Anche se la traccia prevede l'inserimento prodotti esclusivamente tramite CSV, ho incluso uno script di **seeding** per facilitare una valutazione immediata della tabella e della UI senza dover caricare file manualmente.
+
+Per popolare il database con dati di test:
+1. Assicurarsi che i container siano attivi.
+2. Eseguire nel terminale:
+   ```bash
+   docker compose exec backend npx prisma db seed
+
+
+##  Testing con Postman
+
+Nella cartella `/postman` sono presenti la Collection e l'Environment per testare le API.
+1. Importa i file su Postman.
+2. Seleziona l'environment `Products_Dev`.
+3. Le richieste includono già l'header `x-api-key` configurato tramite variabile.
+
+> **Nota**: Assicurati che i container siano attivi (`docker compose up`) prima di inviare le richieste.
+
+
+## Formato CSV per l'importazione
+
+Il file CSV deve contenere le seguenti colonne:
+
+- `name`: Nome del prodotto (obbligatorio, max 20 caratteri)
+- `description`: Descrizione del prodotto (opzionale, max 200 caratteri)
+- `price`: Prezzo originale (obbligatorio, numero positivo)
+- `discountPrice`: Prezzo scontato (opzionale, numero positivo, deve essere inferiore a `price`)
+
+Esempio:
+
+```csv
+name,description,price,discountPrice
+Laptop,Potente laptop professionale,1200,999
+Mouse,Mouse wireless ergonomico,25,
+```
+
+## Note di Design
+- **Creazione Manuale**: Sebbene il requisito principale sia l'importazione CSV, ho implementato anche la creazione manuale per offrire una gestione completa delle risorse (CRUD)
+
+
 ## Come fermare l'applicazione
 Dalla root del progetto, eseguire il comando:
 
@@ -25,7 +66,7 @@ Se non si dispone di Docker, seguire questi passaggi:
 
 ### Database: Assicurarsi di avere un'istanza PostgreSQL attiva.
 
-### Backend:
+### Backend
 
 ```bash
 cd backend
@@ -43,7 +84,7 @@ npx prisma generate
 npm run dev
 ```
 
-### Frontend:
+### Frontend
 
 ```bash
 cd frontend

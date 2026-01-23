@@ -14,7 +14,14 @@ export const findAllProducts = async (page: number, limit: number, search: strin
       },
       orderBy: { createdAt: 'desc' }
     }),
-    prisma.product.count()
+    prisma.product.count({
+      where: {
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+        ],
+      },
+    })
   ]);
   return { products, total };
 };
@@ -36,8 +43,8 @@ export const removeProduct = (id: number) => {
 };
 
 export const bulkCreateProducts = (data: any[]) => {
-  return prisma.product.createMany({ 
-    data, 
-    skipDuplicates: true 
+  return prisma.product.createMany({
+    data,
+    skipDuplicates: true
   });
 };
