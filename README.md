@@ -33,6 +33,14 @@ Nella cartella `/postman` sono presenti la Collection e l'Environment per testar
 
 > **Nota**: Assicurati che i container siano attivi (`docker compose up`) prima di inviare le richieste.
 
+##  Testing Importazione CSV
+
+Nella cartella `/test-file` sono presenti dei file csv per testare l'importazione.
+Provare da interfaccia web a caricare il file e vedere se vengono creati i prodotti.
+ - 1 file contiene dati validi
+ - 1 file contiene righe con dati obbligatori vuoti
+ - 1 file contiene righe con errori dovuti a valori non validi
+
 
 ## Formato CSV per l'importazione
 
