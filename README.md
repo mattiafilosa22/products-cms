@@ -28,7 +28,7 @@ Per popolare il database con dati di test:
 
 Nella cartella `/postman` sono presenti la Collection e l'Environment per testare le API.
 1. Importa i file su Postman.
-2. Seleziona l'environment `Products_Dev`.
+2. Seleziona l'environment `ProductCMS`.
 3. Le richieste includono già l'header `x-api-key` configurato tramite variabile.
 
 > **Nota**: Assicurati che i container siano attivi (`docker compose up`) prima di inviare le richieste.
