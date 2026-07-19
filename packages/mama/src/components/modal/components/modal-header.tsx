@@ -4,17 +4,26 @@ import style from "../modal.module.scss";
 import { AppButton } from "../../app-button/app-button";
 import { useModalContext } from "../modal-context";
 
-export const ModalHeader = () => {
+interface ModalHeaderProps {
+  // Id referenced by the dialog's aria-labelledby.
+  titleId?: string;
+}
+
+export const ModalHeader = ({ titleId }: ModalHeaderProps) => {
   const { title, titleIcon, tryClose } = useModalContext();
 
   return (
     <div className={style.modalHeader}>
       {titleIcon}
-      {title && <div className={style.modalTitle}>{title}</div>}
+      {title && (
+        <div id={titleId} className={style.modalTitle}>
+          {title}
+        </div>
+      )}
       {titleIcon && <div className={style.modalTitleIcon}>{titleIcon}</div>}
 
       <AppButton
-        onClick={() => tryClose()}
+        onClick={() => tryClose(false)}
         className={style.modalClose}
         style="link"
         variant="neutral"

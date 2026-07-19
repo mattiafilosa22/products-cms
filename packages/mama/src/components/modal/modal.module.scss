@@ -1,32 +1,25 @@
 @use "@/styles/variables" as *;
 
-.modalWrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-
-  /* Center the modal content */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--layer-modal);
+// Scroll lock while any modal dialog is open.
+:global(body:has(dialog[open])) {
+  overflow: hidden;
 }
 
 .modal {
-  padding: $spacing-6;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
-
+  // The dialog shell: padding lives on .modalInner so that clicks that hit
+  // the <dialog> element itself can only come from the ::backdrop.
+  padding: 0;
+  border: none;
   background-color: $color-modal-background;
   border-radius: $spacing-2;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 
   &.sm {
     max-width: 300px;
@@ -37,33 +30,12 @@
   }
 }
 
-.modalBackdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  cursor: default;
-  z-index: -1; /* Place behind modal content */
+.modalInner {
+  padding: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
 }
-
-// .mediumModal {
-//   display: flex;
-//   flex-direction: column;
-//   gap: $spacing-10;
-
-// }
-
-// .modal {
-//   padding: $spacing-6;
-//   display: flex;
-//   flex-direction: column;
-//   gap: $spacing-6;
-// }
-
-// .mediumModal {
-//   width: 556px;
-// }
 
 .modalHeader {
   display: flex;

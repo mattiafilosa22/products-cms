@@ -16,7 +16,8 @@ export const ModalFooter = ({ styleButtons = "default" }: ModalFooterProps) => {
       return;
     }
 
-    tryClose();
+    // Dismissal, not confirmation: close with a false result.
+    tryClose(false);
   };
 
   const handleConfirmClick = () => {

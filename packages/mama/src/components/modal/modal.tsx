@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import "reactjs-popup/dist/index.css";
 import { ModalProvider } from "./modal-context";
 import { ModalInner } from "./components/modal-inner";
 import { createPortal } from "react-dom";

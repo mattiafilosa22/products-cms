@@ -11,8 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "react-paginate": "^8.3.0",
-    "reactjs-popup": "^2.0.6"
+    "react-paginate": "^8.3.0"
   },
   "peerDependencies": {
     "@tanstack/react-table": "^8.0.0",

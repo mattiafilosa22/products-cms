@@ -15,7 +15,6 @@ export const ImportModalInner = ({ onSuccess }: { onSuccess?: () => void }) => {
   }, [setTitle]);
 
   const handleImport = async () => {
-    console.log("file", file);
     if (!file) return;
 
     const result = await importProduct(file);
