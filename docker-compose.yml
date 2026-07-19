@@ -39,22 +39,6 @@ services:
     networks:
       - ecommerce_net
 
-  frontend:
-    build: ./frontend
-    container_name: ecommerce_frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
-    env_file:
-      - ./frontend/.env
-    networks:
-      - ecommerce_net
-    depends_on:
-      - backend
-
 networks:
   ecommerce_net:
     driver: bridge
