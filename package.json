@@ -8,6 +8,7 @@
   "scripts": {
     "dev:web": "npm run dev --workspace web",
     "typecheck": "npm exec --workspaces -- tsc --noEmit",
+    "test": "npm run test --workspaces --if-present",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

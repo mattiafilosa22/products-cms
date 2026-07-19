@@ -7,21 +7,28 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "test": "vitest run"
   },
   "dependencies": {
     "react-paginate": "^8.3.0",
     "reactjs-popup": "^2.0.6"
   },
   "peerDependencies": {
+    "@tanstack/react-table": "^8.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.0.0",
-    "react-toastify": "^11.0.5",
-    "@tanstack/react-table": "^8.0.0"
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^6.0.3",
+    "jsdom": "^29.1.1",
     "tsup": "^8.5.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
