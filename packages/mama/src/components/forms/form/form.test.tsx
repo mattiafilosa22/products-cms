@@ -22,9 +22,11 @@ const Host = ({
       onSubmit={onSubmit}
       initialValues={initialValues}
     >
-      <FormField name="nome" label="Nome">
-        <InputText />
-      </FormField>
+      <FormField<string>
+        name="nome"
+        label="Nome"
+        render={(field) => <InputText {...field} />}
+      />
       <button type="submit">Salva</button>
     </Form>
   );

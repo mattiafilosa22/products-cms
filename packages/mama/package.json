@@ -18,8 +18,7 @@
     "@tanstack/react-table": "^8.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.0.0",
-    "react-toastify": "^11.0.5"
+    "react-hook-form": "^7.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

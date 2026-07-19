@@ -4,27 +4,25 @@ import {
   SubmitHandler,
   UseFormReturn,
 } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { useEffect } from "react";
 
-export type FormProps<T extends FieldValues> = {
+export type FormProps<T extends FieldValues, TContext = unknown> = {
   children: React.ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  form: UseFormReturn<T, any, T>;
+  form: UseFormReturn<T, TContext, T>;
   onSubmit?: SubmitHandler<T>;
   className?: string;
   initialValues: T | null;
   id?: string;
 };
 
-export const Form = <T extends FieldValues = FieldValues>({
+export const Form = <T extends FieldValues = FieldValues, TContext = unknown>({
   children,
   form,
   onSubmit,
   className = "",
   initialValues,
   id,
-}: FormProps<T>) => {
+}: FormProps<T, TContext>) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -42,9 +40,6 @@ export const Form = <T extends FieldValues = FieldValues>({
       <form id={id} noValidate onSubmit={handleSubmit} className={className}>
         {children}
       </form>
-      {/* Known debt: dev tooling inside a library component ships to consumers;
-          removed/made opt-in in Piece 3 (Form refactor). */}
-      <DevTool control={form.control} />
     </FormProvider>
   );
 };

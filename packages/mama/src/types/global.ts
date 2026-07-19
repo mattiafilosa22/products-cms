@@ -1,7 +1,6 @@
-export type SelectOption = {
+export type SelectOption<TValue = string> = {
   label: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: made generic with the form typing work (Piece 3)
-  value: any;
+  value: TValue;
 };
 
 export type BaseAction = {

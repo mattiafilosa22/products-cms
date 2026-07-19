@@ -13,13 +13,6 @@ export default defineConfig({
           new URL("./test/svg-stub.tsx", import.meta.url),
         ),
       },
-      // Dev tooling rendered by Form (known debt, Piece 3): irrelevant in tests.
-      {
-        find: "@hookform/devtools",
-        replacement: fileURLToPath(
-          new URL("./test/devtools-stub.tsx", import.meta.url),
-        ),
-      },
     ],
   },
   test: {

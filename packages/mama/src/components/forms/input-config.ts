@@ -1,16 +1,14 @@
 import { RefCallBack } from "react-hook-form";
 
-export interface InputConfig {
+// Shared contract for form inputs. TValue is the value the input works with:
+// InputText/TextArea use the default string, InputPrice uses number|string|null.
+export interface InputConfig<TValue = string> {
   error?: boolean;
   name?: string;
   placeholder?: string;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  value?: any;
+  value?: TValue;
   ref?: RefCallBack;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  onChange?: (e: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  onBlur?: (e: any) => void;
+  onChange?: (value: TValue) => void;
+  onBlur?: (value?: TValue) => void;
   readonly?: boolean;
 }

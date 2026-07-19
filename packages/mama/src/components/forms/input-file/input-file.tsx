@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { toast } from "react-toastify";
 import styles from "./input-file.module.scss";
 import { AppButton } from "../../app-button/app-button";
 import IconClose from "../../../assets/icons/close.svg";
@@ -8,12 +7,16 @@ import IconUpload from "../../../assets/icons/upload.svg";
 
 interface InputFileProps {
   onFileChange: (file: File | null) => void;
+  // Notification stays app concern: the library reports the error message,
+  // the app decides how to surface it (e.g. toast).
+  onFileError?: (message: string) => void;
   accept?: string;
   label?: string;
 }
 
 export const InputFile = ({
   onFileChange,
+  onFileError,
   accept = ".csv",
   label,
 }: InputFileProps) => {
@@ -64,7 +67,7 @@ export const InputFile = ({
       !acceptedExtensions.includes(extension || "")
     ) {
       setHasError(true);
-      toast.error(`Tipo di file non supportato. Caricare un file ${accept}`);
+      onFileError?.(`Tipo di file non supportato. Caricare un file ${accept}`);
 
       // Reset error state after animation
       setTimeout(() => setHasError(false), 2000);

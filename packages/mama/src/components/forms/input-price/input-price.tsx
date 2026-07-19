@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState, useEffect } from "react";
 import styles from "./input-price.module.scss";
 import { InputConfig } from "../input-config";
 
-interface ContainerProps extends InputConfig {
+interface ContainerProps extends InputConfig<number | string | null> {
   placeholder?: string;
   icon?: React.FC<React.SVGProps<SVGSVGElement>> | null;
   skinny?: boolean;
@@ -25,7 +25,7 @@ export const InputPrice: React.FC<ContainerProps> = ({
   currency = "EUR",
   prefix = "",
 }) => {
-  const [price, setPrice] = useState(value || "");
+  const [price, setPrice] = useState<string>(String(value || ""));
   const [focused, setFocused] = useState(false);
 
   const unformatPrice = (raw: string) => {
@@ -64,7 +64,7 @@ export const InputPrice: React.FC<ContainerProps> = ({
       }).format(parsed);
       setPrice(formatted);
     } else {
-      setPrice(raw);
+      setPrice(String(raw));
     }
   }, [value, focused, currency]);
 

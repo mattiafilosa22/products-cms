@@ -17,7 +17,10 @@ export type { ModalResult } from "./components/modal/modal-result";
 export { Form } from "./components/forms/form/form";
 export type { FormProps } from "./components/forms/form/form";
 export { FormField } from "./components/forms/form-field/form-field";
-export type { FormFieldProps } from "./components/forms/form-field/form-field";
+export type {
+  FieldRenderProps,
+  FormFieldProps,
+} from "./components/forms/form-field/form-field";
 export type { InputConfig } from "./components/forms/input-config";
 export { InputText } from "./components/forms/input-text/input-text";
 export { InputPrice } from "./components/forms/input-price/input-price";

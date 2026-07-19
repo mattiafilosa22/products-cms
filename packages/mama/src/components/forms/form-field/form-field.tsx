@@ -1,20 +1,36 @@
 "use client";
 
 import React, { useCallback, useMemo } from "react";
-import { Controller, Noop, RegisterOptions } from "react-hook-form";
+import {
+  Controller,
+  Noop,
+  RefCallBack,
+  RegisterOptions,
+} from "react-hook-form";
 import styles from "./form-field.module.scss";
-import { InputConfig } from "../input-config";
 
-export interface FormFieldProps {
-  children: React.ReactNode;
-  hidden?: boolean;
+// Contract passed to the render prop: the compiler verifies the input
+// component accepts these props (no more cloneElement + runtime cast).
+export interface FieldRenderProps<TValue> {
+  name: string;
+  value: TValue;
+  // RHF change handlers accept either a DOM event or a plain value.
+  onChange: (eventOrValue: unknown) => void;
+  onBlur: () => void;
+  ref: RefCallBack;
+  error: boolean;
+  placeholder?: string;
+  readonly?: boolean;
+}
+
+export interface FormFieldProps<TValue = unknown> {
+  render: (field: FieldRenderProps<TValue>) => React.ReactElement;
   label?: string;
   labelKey?: string;
   placeholder?: string;
   placeholderKey?: string;
   name: string;
   rules?: RegisterOptions;
-  disabled?: boolean | boolean[];
   className?: string;
   hideLabel?: boolean;
   readonly?: boolean;
@@ -24,19 +40,30 @@ export interface FormFieldProps {
    * Use onChange prop if you need more control over input fields
    * (e.g. reset form fields when input changes)
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  onChange?: (e?: any) => void;
+  onChange?: (eventOrValue?: unknown) => void;
 
   /**
    * Use onBlur prop if you need more control over input fields
    * (e.g. perform actions on form fields when input blurs)
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-  onBlur?: (e?: any) => void;
+  onBlur?: () => void;
 }
 
-export const FormField = ({
-  children,
+const isEmptyValue = (value: unknown): boolean =>
+  value === null ||
+  value === undefined ||
+  // empty string
+  (typeof value === "string" && value.trim() === "") ||
+  // empty array
+  (Array.isArray(value) && value.length === 0) ||
+  // empty plain object (numeric 0 is NOT empty: a readonly field holding 0
+  // must render)
+  (typeof value === "object" &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 0);
+
+export const FormField = <TValue = unknown,>({
+  render,
   name,
   rules,
   onChange,
@@ -49,26 +76,20 @@ export const FormField = ({
   hideLabel = false,
   readonly = false,
   hideError = false,
-}: FormFieldProps) => {
+}: FormFieldProps<TValue>) => {
   const handleChange = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-    (rhfOnChange: (...event: any[]) => void) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-      return (e: any) => {
-        rhfOnChange(e);
-        onChange?.(e);
-      };
-    },
+    (rhfOnChange: (eventOrValue: unknown) => void) =>
+      (eventOrValue: unknown) => {
+        rhfOnChange(eventOrValue);
+        onChange?.(eventOrValue);
+      },
     [onChange],
   );
 
   const handleBlur = useCallback(
-    (rhfOnBlur: Noop) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
-      return (e: any) => {
-        rhfOnBlur();
-        onBlur?.(e);
-      };
+    (rhfOnBlur: Noop) => () => {
+      rhfOnBlur();
+      onBlur?.();
     },
     [onBlur],
   );
@@ -109,56 +130,36 @@ export const FormField = ({
   return (
     <Controller
       name={name}
-      render={({ field, fieldState }) => {
-        const isEmpty =
-          field.value === null ||
-          field.value === undefined ||
-          // empty string
-          (typeof field.value === "string" && field.value.trim() === "") ||
-          // empty array
-          (Array.isArray(field.value) && field.value.length === 0) ||
-          // numeric zero (common sentinel for "no selection" in taxonomy selects)
-          (typeof field.value === "number" && field.value === 0) ||
-          // empty plain object
-          (typeof field.value === "object" &&
-            !Array.isArray(field.value) &&
-            Object.keys(field.value || {}).length === 0);
-
-        // Don't render anything when readonly and the value is empty/null/undefined
-        if (readonly && isEmpty) return <></>;
-
-        if (React.isValidElement(children)) {
-          const hasError = !!fieldState.error && !hideError;
-          return (
-            <div className={`${styles.formField} ${className}`}>
-              {displayLabel && !hideLabel && (
-                <label htmlFor={name} className={styles.formFieldLabel}>
-                  {displayLabel}
-                </label>
-              )}
-              {React.cloneElement(
-                children as React.ReactElement,
-                {
-                  ...(hasError && { error: hasError }),
-                  name: field.name,
-                  onBlur: handleBlur(field.onBlur),
-                  onChange: handleChange(field.onChange),
-                  ref: field.ref,
-                  value: field.value,
-                  placeholder: placeholderValue,
-                  readonly: readonly,
-                } as InputConfig,
-              )}
-              <div className={styles.formFieldError}>
-                {hideError ? "" : (fieldState.error?.message ?? "")}
-              </div>
-            </div>
-          );
-        }
-
-        throw new Error("Invalid form input");
-      }}
       rules={rulesValue}
+      render={({ field, fieldState }) => {
+        // Don't render anything when readonly and the value is empty
+        if (readonly && isEmptyValue(field.value)) return <></>;
+
+        const hasError = !!fieldState.error && !hideError;
+
+        return (
+          <div className={`${styles.formField} ${className}`}>
+            {displayLabel && !hideLabel && (
+              <label htmlFor={name} className={styles.formFieldLabel}>
+                {displayLabel}
+              </label>
+            )}
+            {render({
+              name: field.name,
+              value: field.value,
+              onChange: handleChange(field.onChange),
+              onBlur: handleBlur(field.onBlur),
+              ref: field.ref,
+              error: hasError,
+              placeholder: placeholderValue,
+              readonly,
+            })}
+            <div className={styles.formFieldError}>
+              {hideError ? "" : (fieldState.error?.message ?? "")}
+            </div>
+          </div>
+        );
+      }}
     />
   );
 };

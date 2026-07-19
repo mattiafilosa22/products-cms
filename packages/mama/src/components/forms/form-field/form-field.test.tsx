@@ -13,16 +13,19 @@ const Host = ({
   defaultValues = { nome: "" },
   onSubmit = () => {},
   ...fieldProps
-}: Partial<FormFieldProps> & {
+}: Partial<Omit<FormFieldProps<string>, "render" | "name">> & {
   defaultValues?: TestValues;
   onSubmit?: (data: TestValues) => void;
 }) => {
   const form = useForm<TestValues>({ defaultValues });
   return (
     <Form<TestValues> form={form} onSubmit={onSubmit} initialValues={null}>
-      <FormField name="nome" label="Nome" {...fieldProps}>
-        <InputText />
-      </FormField>
+      <FormField<string>
+        name="nome"
+        label="Nome"
+        {...fieldProps}
+        render={(field) => <InputText {...field} />}
+      />
       <button type="submit">Salva</button>
     </Form>
   );
@@ -39,7 +42,7 @@ describe("FormField", () => {
     expect(screen.getByText("Nome*")).toBeInTheDocument();
   });
 
-  it("inietta name e value nel figlio e propaga l'onChange", async () => {
+  it("passa name e value al render e propaga l'onChange", async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
     render(<Host defaultValues={{ nome: "iniziale" }} onSubmit={onSubmit} />);
@@ -68,6 +71,39 @@ describe("FormField", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
+  it("passa error=true al render dopo un submit fallito", async () => {
+    const user = userEvent.setup();
+    const ErrorProbe = () => {
+      const form = useForm<TestValues>({ defaultValues: { nome: "" } });
+      return (
+        <Form<TestValues> form={form} onSubmit={() => {}} initialValues={null}>
+          <FormField<string>
+            name="nome"
+            label="Nome"
+            rules={{ required: true }}
+            render={(field) => (
+              <input
+                id={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                data-error={field.error ? "yes" : "no"}
+              />
+            )}
+          />
+          <button type="submit">Salva</button>
+        </Form>
+      );
+    };
+    render(<ErrorProbe />);
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-error", "no");
+    await user.click(screen.getByRole("button", { name: "Salva" }));
+    expect(await screen.findByRole("textbox")).toHaveAttribute(
+      "data-error",
+      "yes",
+    );
+  });
+
   it("con readonly e valore vuoto non renderizza nulla", () => {
     render(<Host readonly defaultValues={{ nome: "" }} />);
     expect(screen.queryByText("Nome")).not.toBeInTheDocument();
@@ -79,5 +115,29 @@ describe("FormField", () => {
     const input = screen.getByRole("textbox");
     expect(input).toHaveValue("valore");
     expect(input).toHaveAttribute("readonly");
+  });
+
+  it("con readonly e valore 0 renderizza il campo (fix isEmpty/zero)", () => {
+    const ZeroProbe = () => {
+      const form = useForm<{ qty: number }>({ defaultValues: { qty: 0 } });
+      return (
+        <Form<{ qty: number }>
+          form={form}
+          onSubmit={() => {}}
+          initialValues={null}
+        >
+          <FormField<number>
+            name="qty"
+            label="Quantità"
+            readonly
+            render={(field) => <output>{String(field.value)}</output>}
+          />
+        </Form>
+      );
+    };
+    render(<ZeroProbe />);
+
+    expect(screen.getByText("Quantità")).toBeInTheDocument();
+    expect(screen.getByText("0")).toBeInTheDocument();
   });
 });
