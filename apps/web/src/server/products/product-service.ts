@@ -1,5 +1,6 @@
-import prisma from "../../lib/prisma.ts";
+import prisma from "../prisma";
 import { Prisma } from "@prisma/client";
+import { CreateProductInput, UpdateProductInput } from "./product.schema";
 
 export const findAllProducts = async (
   page: number,
@@ -34,13 +35,14 @@ export const findProductById = async (id: number) => {
   return prisma.product.findUnique({ where: { id } });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
-export const createNewProduct = async (data: any) => {
+export const createNewProduct = async (data: CreateProductInput) => {
   return prisma.product.create({ data });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
-export const updateExistingProduct = async (id: number, data: any) => {
+export const updateExistingProduct = async (
+  id: number,
+  data: UpdateProductInput,
+) => {
   try {
     return await prisma.product.update({ where: { id }, data });
   } catch (error) {
@@ -68,8 +70,7 @@ export const removeProduct = async (id: number) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
-export const bulkCreateProducts = async (data: any[]) => {
+export const bulkCreateProducts = async (data: CreateProductInput[]) => {
   return prisma.product.createMany({
     data,
     skipDuplicates: true,

@@ -6,14 +6,22 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@casl/ability": "^6.7.3",
     "@casl/react": "^5.0.0",
     "@floating-ui/react": "^0.27.16",
+    "@prisma/client": "^5.0.0",
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.11.0",
+    "csv-parser": "^3.2.0",
     "geist": "^1.5.1",
     "jwt-decode": "^4.0.0",
     "mama": "*",
@@ -26,13 +34,14 @@
     "react-select": "^5.10.2",
     "react-switch": "^7.1.0",
     "react-toastify": "^11.0.5",
-    "reactjs-popup": "^2.0.6",
     "styled-components": "^6.1.19",
     "universal-cookie": "^8.0.1",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.5",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^10.2.0",
     "@hookform/devtools": "^4.4.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
@@ -40,7 +49,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.7",
+    "prisma": "^5.0.0",
     "sass": "^1.90.0",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

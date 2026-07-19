@@ -1,18 +1,22 @@
-import fs from "fs";
+import { Readable } from "node:stream";
 import csv from "csv-parser";
-import { createProductSchema } from "../../features/products/product.schema.ts";
+import { createProductSchema, CreateProductInput } from "./product.schema";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
-export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
+type CsvRow = Record<string, string>;
+
+// Parses the uploaded CSV from an in-memory buffer (no multer, no temp files).
+// Fail-fast contract preserved from the Express backend: first invalid row
+// rejects with the same literal message (header is row 1, data starts at 2).
+export const parseProductsFromCsv = (
+  buffer: Buffer,
+): Promise<CreateProductInput[]> => {
   return new Promise((resolve, reject) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
-    const results: any[] = [];
+    const results: CreateProductInput[] = [];
 
     let rowCounter = 1; // Consider header as row 1, data starts at row 2
-    const stream = fs
-      .createReadStream(filePath)
+    const stream = Readable.from(buffer)
       .pipe(csv())
-      .on("data", (data) => {
+      .on("data", (data: CsvRow) => {
         rowCounter++;
         // map and validate data
         const formattedProduct = createProductSchema.safeParse({
@@ -36,6 +40,7 @@ export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
               `Errore alla riga ${rowCounter}: Validazione fallita: ${errorMessage}`,
             ),
           );
+          return;
         }
 
         results.push(formattedProduct.data);
