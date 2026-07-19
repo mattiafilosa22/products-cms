@@ -9,9 +9,10 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 > **Spec normativa**: `docs/superpowers/specs/2026-07-19-mama-ui-library-design.md`
 > (contesto, decisioni, roadmap in 8 pezzi, criteri di successo). Leggerla prima di ogni plan.
-> **Stato attuale**: pre-Pezzo-1. La libreria vive ancora in `frontend/src/app/_shared/` e il
-> backend Express è attivo in `backend/`; `apps/` e `packages/` non esistono ancora.
-> Aggiornare questa nota man mano che i pezzi si chiudono.
+> **Stato attuale**: Pezzo 1 completato. Monorepo npm workspaces attivo: app in `apps/web`,
+> UI library in `packages/mama` (build tsup con `.d.ts`); tooling radice ESLint + Prettier
+> operativo. Il backend Express è ancora in `backend/` (migra col Pezzo 5).
+> Prossimo: Pezzo 2 (test su mama + CI). Aggiornare questa nota man mano che i pezzi si chiudono.
 
 ## Stack & vincoli (non negoziabili)
 
@@ -92,8 +93,16 @@ npm run build         # tsup / next build, dove il pezzo tocca la build
 
 La CI (GitHub Actions) esegue gli stessi gate su ogni push: la pipeline rossa blocca il pezzo.
 
-(I nomi esatti degli script vengono definiti nei Pezzi 1-2; questo file va aggiornato di
-conseguenza.)
+Script di radice disponibili (Pezzo 1):
+
+```sh
+npm run dev:web               # dev server Next.js (workspace web)
+npm run typecheck             # tsc --noEmit su tutti i workspace
+npm run lint                  # eslint sull'intero monorepo
+npm run format                # prettier --write
+npm run format:check          # prettier --check
+npm run build --workspace mama  # build tsup della libreria
+```
 
 ## Workflow — Human in the loop
 

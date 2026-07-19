@@ -1,20 +1,47 @@
 # Products CMS
 
-Questo progetto è interamente containerizzato con Docker. Seguire i passaggi indicati per l'avvio.
+Monorepo npm workspaces: l'app Next.js gira in locale, mentre database PostgreSQL e
+backend Express girano in Docker.
+
+## Struttura del repo
+
+```text
+products-cms/
+├─ apps/
+│  └─ web/            # app Next.js (frontend)
+├─ packages/
+│  └─ mama/           # UI library condivisa (build tsup)
+├─ backend/           # API Express + Prisma (migra dentro apps/web col Pezzo 5)
+├─ postman/           # collection e environment per testare le API
+└─ docker-compose.yml # PostgreSQL + backend
+```
 
 ## Requisiti Preliminari
 
-Prima di avviare i container, è necessario configurare le variabili d'ambiente:
+Prima di avviare, configurare le variabili d'ambiente:
 
 1. Entrare nella cartella `/backend` e rinominare `.env.example` in `.env`
-2. Fare lo stesso nella cartella `/frontend`
+2. Fare lo stesso nella cartella `/apps/web`
 
-## Come avviare l'applicazione
+## Come avviare l'applicazione (sviluppo)
 
-Dalla root del progetto, eseguire il comando:
+Dalla root del progetto:
 
 ```bash
-docker compose up --build
+docker compose up -d   # avvia database e backend (porta 3008)
+npm install            # installa i workspace
+npm run dev:web        # avvia l'app Next.js su http://localhost:3000
+```
+
+## Comandi di qualità
+
+Dalla root del progetto:
+
+```bash
+npm run typecheck             # type check su tutti i workspace
+npm run lint                  # eslint sull'intero monorepo
+npm run format:check          # prettier --check
+npm run build --workspace mama  # build della UI library
 ```
 
 ## Dati di Test (Seeding)
@@ -38,7 +65,7 @@ Nella cartella `/postman` sono presenti la Collection e l'Environment per testar
 2. Seleziona l'environment `ProductCMS`.
 3. Le richieste includono già l'header `x-api-key` configurato tramite variabile.
 
-> **Nota**: Assicurati che i container siano attivi (`docker compose up`) prima di inviare le richieste.
+> **Nota**: Assicurati che i container siano attivi (`docker compose up -d`) prima di inviare le richieste.
 
 ## Testing Importazione CSV
 
@@ -72,7 +99,7 @@ Mouse,Mouse wireless ergonomico,25,
 
 ## Come fermare l'applicazione
 
-Dalla root del progetto, eseguire il comando:
+Fermare il dev server con `Ctrl+C`, poi dalla root del progetto:
 
 ```bash
 docker compose down
@@ -100,16 +127,14 @@ npx prisma generate
 npm run dev
 ```
 
-### Frontend
+### App web
 
-```bash
-cd frontend
-```
+Dalla root del progetto:
 
 ```bash
 npm install
 ```
 
 ```bash
-npm run dev
+npm run dev:web
 ```
