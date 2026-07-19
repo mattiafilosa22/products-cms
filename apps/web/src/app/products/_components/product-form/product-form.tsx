@@ -1,4 +1,5 @@
 import { Product } from "@/api/products/_type";
+import { DevTool } from "@hookform/devtools";
 import { Form, FormField, InputPrice, InputText, TextArea } from "mama";
 import { useForm } from "react-hook-form";
 interface ProductFormProps {
@@ -33,33 +34,30 @@ export const ProductForm = ({
     >
       <div className="form-container">
         <div>
-          <FormField
+          <FormField<string>
             name="name"
             label="Nome"
             placeholder="Nome"
             readonly={readonly}
             rules={{ required: true }}
-          >
-            <InputText maxLength={20} />
-          </FormField>
-          <FormField
+            render={(field) => <InputText {...field} maxLength={20} />}
+          />
+          <FormField<string>
             name="description"
             label="Descrizione"
             placeholder="Descrizione"
             readonly={readonly}
-          >
-            <TextArea maxLength={200} rows={2} />
-          </FormField>
-          <FormField
+            render={(field) => <TextArea {...field} maxLength={200} rows={2} />}
+          />
+          <FormField<number | string | null>
             name="price"
             label="Prezzo"
             placeholder="Prezzo"
             readonly={readonly}
             rules={{ required: true }}
-          >
-            <InputPrice />
-          </FormField>
-          <FormField
+            render={(field) => <InputPrice {...field} />}
+          />
+          <FormField<number | string | null>
             name="discountPrice"
             label="Prezzo Scontato"
             placeholder="Prezzo Scontato"
@@ -73,12 +71,13 @@ export const ProductForm = ({
                 return true;
               },
             }}
-          >
-            <InputPrice />
-          </FormField>
+            render={(field) => <InputPrice {...field} />}
+          />
         </div>
         {children}
       </div>
+      {/* Dev tooling now lives app-side (moved out of mama in Piece 3). */}
+      <DevTool control={form.control} />
     </Form>
   );
 };

@@ -1,4 +1,5 @@
 import { useModalContext } from "mama";
+import { toast } from "react-toastify";
 import { useImportProduct } from "@/api/products/_importProduct";
 import { useEffect, useState } from "react";
 import styles from "./import-modal.module.scss";
@@ -37,9 +38,9 @@ export const ImportModalInner = ({ onSuccess }: { onSuccess?: () => void }) => {
     <div className={styles.importModal}>
       <InputFile
         onFileChange={(selectedFile: File | null) => {
-          // console.log("selectedFile", selectedFile);
           setFile(selectedFile);
         }}
+        onFileError={(message) => toast.error(message)}
       />
     </div>
   );

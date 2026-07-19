@@ -9,11 +9,12 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 > **Spec normativa**: `docs/superpowers/specs/2026-07-19-mama-ui-library-design.md`
 > (contesto, decisioni, roadmap in 8 pezzi, criteri di successo). Leggerla prima di ogni plan.
-> **Stato attuale**: Pezzo 2 completato. Monorepo npm workspaces attivo: app in `apps/web`,
-> UI library in `packages/mama` (build tsup con `.d.ts`) con suite Vitest + Testing Library
-> sul comportamento attuale di Form/FormField, Modal e Table; CI GitHub Actions attiva
-> (type check, lint, format check, test, build). Il backend Express è ancora in `backend/`
-> (migra col Pezzo 5). Prossimo: Pezzo 3 (FormField a render prop tipizzato).
+> **Stato attuale**: Pezzo 3 completato. Monorepo npm workspaces attivo: app in `apps/web`,
+> UI library in `packages/mama` (build tsup con `.d.ts`, suite Vitest, CI GitHub Actions).
+> `FormField` usa la render prop tipizzata (`FieldRenderProps<TValue>`), zero `any` in mama,
+> fix isEmpty/zero, DevTool e toast spostati lato app (breaking da documentare nel CHANGELOG
+> del Pezzo 7). Il backend Express è ancora in `backend/` (migra col Pezzo 5).
+> Prossimo: Pezzo 4 (Modal accessibile su `<dialog>`).
 > Aggiornare questa nota man mano che i pezzi si chiudono.
 
 ## Stack & vincoli (non negoziabili)
@@ -41,8 +42,9 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 - Pattern in uso da preservare: **compound components + context** (Modal, Table),
   **generics sui dati** (`Table<TData>`, `Form<T extends FieldValues>`),
   **contratti espliciti** tra componenti (es. `InputConfig`).
-- Refactor chiave (Pezzo 3): `FormField` passa da `cloneElement` a **render prop tipizzato**
-  (`render={(field) => <InputText {...field} />}`): il contratto lo verifica il compilatore.
+- Refactor chiave (fatto nel Pezzo 3): `FormField` usa un **render prop tipizzato**
+  (`render={(field) => <InputText {...field} />}`, contratto `FieldRenderProps<TValue>`):
+  il contratto lo verifica il compilatore, niente `cloneElement`.
 - **Lato server**: Route Handler sottile → schema Zod al confine → service (logica) → Prisma.
   Nessuna business logic nei handler; errori strutturati con status coerenti.
 - I breaking change alle API pubbliche di mama sono ammessi ma vanno trattati come tali:
