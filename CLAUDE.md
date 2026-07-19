@@ -9,12 +9,13 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 > **Spec normativa**: `docs/superpowers/specs/2026-07-19-mama-ui-library-design.md`
 > (contesto, decisioni, roadmap in 8 pezzi, criteri di successo). Leggerla prima di ogni plan.
-> **Stato attuale**: Pezzo 3 completato. Monorepo npm workspaces attivo: app in `apps/web`,
+> **Stato attuale**: Pezzo 4 completato. Monorepo npm workspaces attivo: app in `apps/web`,
 > UI library in `packages/mama` (build tsup con `.d.ts`, suite Vitest, CI GitHub Actions).
-> `FormField` usa la render prop tipizzata (`FieldRenderProps<TValue>`), zero `any` in mama,
-> fix isEmpty/zero, DevTool e toast spostati lato app (breaking da documentare nel CHANGELOG
-> del Pezzo 7). Il backend Express è ancora in `backend/` (migra col Pezzo 5).
-> Prossimo: Pezzo 4 (Modal accessibile su `<dialog>`).
+> `FormField` a render prop tipizzata, zero `any` in mama; Modal su `<dialog>` nativo
+> (focus trap/Esc/backdrop dal browser, `aria-labelledby`, scroll lock) con Annulla/Esc/
+> backdrop → `ModalResult = false`; `reactjs-popup` rimossa. Breaking dei Pezzi 3-4 da
+> documentare nel CHANGELOG del Pezzo 7. Il backend Express è ancora in `backend/`.
+> Prossimo: Pezzo 5 (backend dentro Next: Route Handlers + Prisma).
 > Aggiornare questa nota man mano che i pezzi si chiudono.
 
 ## Stack & vincoli (non negoziabili)
