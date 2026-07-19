@@ -35,12 +35,12 @@ verifica i contratti REST con la collection Postman (o richieste equivalenti).
 
 ## Rubrica pesata (somma = 10)
 
-| Categoria | Punti | Cosa valuti |
-|---|---|---|
-| Correttezza funzionale | 3 | Fa ciò che il pezzo richiede; l'app funziona come prima (nessuna regressione); contratti REST invariati dove pertinente; edge case gestiti (es. valore 0, campi vuoti, chiusura modal, CSV malformato). |
-| Tipi + aderenza convenzioni | 3 | Zero `any`; niente `as` ingiustificati; API pubbliche tipizzate; generics dove previsto; guard clause; componenti/moduli corti; niente magic string; mama non importa dall'app; handler sottili con Zod al confine; stile coerente col repo. |
-| Test | 2 | Test previsti dal plan presenti, verdi, sul comportamento pubblico (non sull'implementazione); **essenziali**: coprono happy path + errori/edge previsti, senza gonfiare la suite. (Gate: mancanti o rossi → totale < 10.) |
-| API design + sicurezza + a11y | 2 | API della libreria coerenti e minime; breaking change segnalati per il CHANGELOG; input esterni validati (Zod), niente dati sensibili nei log/risposte; a11y dove pertinente (focus, Esc, aria, label); exports/peerDeps corretti; niente over-engineering. |
+| Categoria                     | Punti | Cosa valuti                                                                                                                                                                                                                                                 |
+| ----------------------------- | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Correttezza funzionale        | 3     | Fa ciò che il pezzo richiede; l'app funziona come prima (nessuna regressione); contratti REST invariati dove pertinente; edge case gestiti (es. valore 0, campi vuoti, chiusura modal, CSV malformato).                                                     |
+| Tipi + aderenza convenzioni   | 3     | Zero `any`; niente `as` ingiustificati; API pubbliche tipizzate; generics dove previsto; guard clause; componenti/moduli corti; niente magic string; mama non importa dall'app; handler sottili con Zod al confine; stile coerente col repo.                |
+| Test                          | 2     | Test previsti dal plan presenti, verdi, sul comportamento pubblico (non sull'implementazione); **essenziali**: coprono happy path + errori/edge previsti, senza gonfiare la suite. (Gate: mancanti o rossi → totale < 10.)                                  |
+| API design + sicurezza + a11y | 2     | API della libreria coerenti e minime; breaking change segnalati per il CHANGELOG; input esterni validati (Zod), niente dati sensibili nei log/risposte; a11y dove pertinente (focus, Esc, aria, label); exports/peerDeps corretti; niente over-engineering. |
 
 Assegna i punti per categoria (anche frazionari) e **motiva ogni detrazione**.
 

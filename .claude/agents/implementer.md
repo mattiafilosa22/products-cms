@@ -39,12 +39,14 @@ a termine.
 ## Come scrivere (convenzioni — dal CLAUDE.md)
 
 **Tipi (vincolo forte):**
+
 - **Vietato `any`** (ESLint `@typescript-eslint/no-explicit-any` in error); al limite
   `unknown` + narrowing. Niente cast `as` per zittire il compilatore: ogni `as` va
   giustificato con un commento sul perché è sicuro.
 - API pubbliche del package esplicitamente tipizzate; preferire generics e discriminated unions.
 
 **Architettura:**
+
 - mama fornisce struttura e comportamento, l'app fornisce i dati: **mama non importa mai
   dall'applicazione** e non contiene data fetching. Dipendenza a senso unico.
 - Estensione via composizione (children, render prop, context), non via flag booleani accumulati.
@@ -53,9 +55,10 @@ a termine.
   segnalati nell'output per il CHANGELOG.
 
 **Stile:**
+
 - Guard clause / early return; componenti e funzioni corti, a responsabilità singola.
 - Niente magic string/number → costanti nominate o union types.
-- Commenti brevi e solo sul *perché*. Codice semplice: niente over-engineering.
+- Commenti brevi e solo sul _perché_. Codice semplice: niente over-engineering.
 
 ## Test e qualità (parte del "done")
 

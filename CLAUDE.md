@@ -59,7 +59,7 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 - Guard clause / early return; componenti e funzioni corti, a responsabilità singola.
 - Niente magic string/number: costanti nominate o union types.
-- Commenti brevi e solo sul *perché*; il codice dice il *cosa*.
+- Commenti brevi e solo sul _perché_; il codice dice il _cosa_.
 - Un componente = una cartella (`component.tsx` + `component.module.scss` + eventuale `index.ts`),
   come già in uso nel repo.
 - SOLID applicato al contesto: responsabilità singola per componente/modulo; estensione via
