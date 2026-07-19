@@ -3,7 +3,11 @@
 import { useApi } from "../useApi";
 
 export const useImportProduct = () => {
-  const { execute, isLoading, data, error } = useApi<any>("/products/import", "POST");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: typed with the data layer refactor (Piece 6)
+  const { execute, isLoading, data, error } = useApi<any>(
+    "/products/import",
+    "POST",
+  );
 
   const importProduct = async (file: File) => {
     const formData = new FormData();

@@ -1,7 +1,13 @@
 "use client";
 
 import { PropsWithChildren, ReactNode } from "react";
-import React, { createContext, useContext, useState, useCallback, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { ModalResult } from "./modal-result";
 
 interface ModalProviderProps extends PropsWithChildren {
@@ -29,7 +35,7 @@ interface ModalContextInterface {
 }
 
 const ModalContext = createContext<ModalContextInterface | undefined>(
-  undefined
+  undefined,
 );
 
 export function useModalContext(): ModalContextInterface {
@@ -38,19 +44,29 @@ export function useModalContext(): ModalContextInterface {
   return context;
 }
 
-export const ModalProvider: React.FC<ModalProviderProps> = ({ 
-  children, 
-  closeModal 
+export const ModalProvider: React.FC<ModalProviderProps> = ({
+  children,
+  closeModal,
 }) => {
+  const defaultCancelButton = {
+    label: "Annulla",
+    disabled: false,
+    loading: false,
+    onClick: null,
+  };
+  const defaultConfirmButton = {
+    label: "Conferma",
+    disabled: false,
+    loading: false,
+    onClick: null,
+  };
 
-  const defaultCancelButton = { label: "Annulla", disabled: false, loading: false, onClick: null };
-  const defaultConfirmButton = { label: "Conferma", disabled: false, loading: false, onClick: null };
-
-  const [cancelButtonState, setCancelButtonState] = useState<ButtonConfig>(defaultCancelButton);
-  const [confirmButtonState, setConfirmButtonState] = useState<ButtonConfig>(defaultConfirmButton);
+  const [cancelButtonState, setCancelButtonState] =
+    useState<ButtonConfig>(defaultCancelButton);
+  const [confirmButtonState, setConfirmButtonState] =
+    useState<ButtonConfig>(defaultConfirmButton);
   const [titleState, setTitleState] = useState<string | undefined>(undefined);
   const [titleIconState, setTitleIconState] = useState<ReactNode>(undefined);
-
 
   // Use functional updates and stable callbacks to avoid recreating setter
   // functions on every render. This prevents consumers that call the
@@ -69,38 +85,45 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({
     }));
   }, []);
 
-  const setTitle = useCallback((title: string | undefined, icon?: ReactNode) => {
-    setTitleState(title);
-    setTitleIconState(icon);
-  }, []);
+  const setTitle = useCallback(
+    (title: string | undefined, icon?: ReactNode) => {
+      setTitleState(title);
+      setTitleIconState(icon);
+    },
+    [],
+  );
 
-  const tryClose = useCallback((result: ModalResult | undefined = true) => {
-    closeModal(result);
-  }, [closeModal]);
+  const tryClose = useCallback(
+    (result: ModalResult | undefined = true) => {
+      closeModal(result);
+    },
+    [closeModal],
+  );
 
-  const context: ModalContextInterface = useMemo(() => ({
-    cancelConfig: cancelButtonState,
-    setCancelConfig,
-    confirmConfig: confirmButtonState,
-    setConfirmConfig,
-    title: titleState,
-    titleIcon: titleIconState,
-    setTitle,
-    tryClose,
-  }), [
-    cancelButtonState,
-    confirmButtonState,
-    titleState,
-    titleIconState,
-    setCancelConfig,
-    setConfirmConfig,
-    setTitle,
-    tryClose,
-  ]);
+  const context: ModalContextInterface = useMemo(
+    () => ({
+      cancelConfig: cancelButtonState,
+      setCancelConfig,
+      confirmConfig: confirmButtonState,
+      setConfirmConfig,
+      title: titleState,
+      titleIcon: titleIconState,
+      setTitle,
+      tryClose,
+    }),
+    [
+      cancelButtonState,
+      confirmButtonState,
+      titleState,
+      titleIconState,
+      setCancelConfig,
+      setConfirmConfig,
+      setTitle,
+      tryClose,
+    ],
+  );
 
   return (
-    <ModalContext.Provider value={context}>
-      {children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={context}>{children}</ModalContext.Provider>
   );
 };

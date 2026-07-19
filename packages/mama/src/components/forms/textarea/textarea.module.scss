@@ -3,10 +3,9 @@
 .appTextArea {
   width: 100%;
 
-  &.resize{
-
+  &.resize {
     textarea {
-      resize: vertical!important;
+      resize: vertical !important;
     }
   }
 
@@ -19,9 +18,8 @@
     border-radius: $spacing-2;
     border: 1px solid $color-input-border;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-    resize: none!important;
+    resize: none !important;
     background-color: transparent;
-
   }
 
   &.inputError {

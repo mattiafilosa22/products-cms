@@ -1,4 +1,4 @@
-import React, { use, useMemo } from "react";
+import React, { useMemo } from "react";
 import style from "../modal.module.scss";
 import { AppButton } from "../../app-button/app-button";
 import { useModalContext } from "../modal-context";
@@ -7,9 +7,7 @@ interface ModalFooterProps {
   styleButtons?: "default" | "danger";
 }
 
-export const ModalFooter = ({
-  styleButtons = "default"
-}: ModalFooterProps) => {
+export const ModalFooter = ({ styleButtons = "default" }: ModalFooterProps) => {
   const { cancelConfig, confirmConfig, tryClose } = useModalContext();
 
   const handleCancelClick = () => {
@@ -19,18 +17,22 @@ export const ModalFooter = ({
     }
 
     tryClose();
-  }
+  };
 
   const handleConfirmClick = () => {
     confirmConfig?.onClick?.();
-  }
+  };
 
-  const cancelLabel = useMemo(() =>
-    cancelConfig?.labelKey ? cancelConfig.labelKey : cancelConfig?.label
-  , [cancelConfig]);
-  const confirmLabel = useMemo(() =>
-    confirmConfig?.labelKey ? confirmConfig.labelKey : confirmConfig?.label
-  , [confirmConfig]);
+  const cancelLabel = useMemo(
+    () =>
+      cancelConfig?.labelKey ? cancelConfig.labelKey : cancelConfig?.label,
+    [cancelConfig],
+  );
+  const confirmLabel = useMemo(
+    () =>
+      confirmConfig?.labelKey ? confirmConfig.labelKey : confirmConfig?.label,
+    [confirmConfig],
+  );
 
   return (
     <div className={style.modalFooter}>

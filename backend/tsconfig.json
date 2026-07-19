@@ -12,9 +12,7 @@
     "rewriteRelativeImportExtensions": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   }
 }

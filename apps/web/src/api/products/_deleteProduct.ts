@@ -9,4 +9,4 @@ export const useDeleteProduct = () => {
   const deleteProduct = useCallback((id: number) => execute({ id }), [execute]);
 
   return { deleteProduct, isLoading, error };
-}
+};

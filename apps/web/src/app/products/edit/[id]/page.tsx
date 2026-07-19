@@ -21,6 +21,7 @@ export default function EditProductPage({
   const { getProductById, isLoading, data } = getProduct();
   const {
     updateProduct,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
     data: dataUpdateProduct,
     isLoading: isLoadingUpdateProduct,
   } = useUpdateProduct();

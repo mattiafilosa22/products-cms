@@ -20,9 +20,16 @@ export type GetAllProductsResponse = {
 };
 
 export const getAllProducts = () => {
-  const { data, isLoading, error, execute } = useApi<GetAllProductsResponse>(`/products`, "GET", true);
+  const { data, isLoading, error, execute } = useApi<GetAllProductsResponse>(
+    `/products`,
+    "GET",
+    true,
+  );
 
-  const getProducts = useCallback((input: GetAllProductsRequest) => execute(input), [execute]);
+  const getProducts = useCallback(
+    (input: GetAllProductsRequest) => execute(input),
+    [execute],
+  );
 
   return { data, isLoading, error, getProducts };
-}
+};

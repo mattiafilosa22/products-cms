@@ -1,5 +1,5 @@
 @use "@/styles/variables" as *;
-@use '@/styles/colors' as *;
+@use "@/styles/colors" as *;
 
 .formField {
   padding-bottom: 0px;
@@ -13,7 +13,7 @@
     display: block;
     font-size: $font-size-3;
     line-height: 15px;
-      color: $grey-800;
+    color: $grey-800;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: $spacing-1;

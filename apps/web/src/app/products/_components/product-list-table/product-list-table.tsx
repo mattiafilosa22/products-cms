@@ -23,7 +23,9 @@ export const ProductListTable = ({
 }: ProductListTableProps<GetAllProductsRequest>) => {
   const {
     deleteProduct,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
     isLoading: isDeletingProduct,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
     error,
   } = useDeleteProduct();
 
@@ -58,6 +60,7 @@ export const ProductListTable = ({
         onOptionsChange({
           page: pagination?.page || 1,
           limit: pagination?.limit || 10,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: typed with the data layer refactor (Piece 6)
         } as any);
       }
     },
@@ -69,6 +72,7 @@ export const ProductListTable = ({
       onOptionsChange({
         page: state.page + 1,
         limit: pagination?.limit || 10,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: typed with the data layer refactor (Piece 6)
       } as any);
     },
     [onOptionsChange, pagination?.limit],

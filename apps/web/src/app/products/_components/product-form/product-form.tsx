@@ -1,14 +1,6 @@
 import { Product } from "@/api/products/_type";
-import {
-  Form,
-  FormField,
-  InputPrice,
-  InputText,
-  TextArea,
-} from "mama";
-import { useForm, useFormContext } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { Form, FormField, InputPrice, InputText, TextArea } from "mama";
+import { useForm } from "react-hook-form";
 interface ProductFormProps {
   product: Product | null;
   onSubmit: (data: Product) => void;
@@ -20,6 +12,7 @@ interface ProductFormProps {
 export const ProductForm = ({
   product,
   onSubmit,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
   isLoading,
   readonly = false,
   children,

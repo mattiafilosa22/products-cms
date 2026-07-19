@@ -1,5 +1,5 @@
 @use "@/styles/variables" as *;
-@use '@/styles/colors' as *;
+@use "@/styles/colors" as *;
 
 .pagination {
   display: flex;
@@ -108,7 +108,6 @@
     }
 
     tr {
-
       th,
       td {
         text-align: left;
@@ -139,7 +138,7 @@
           white-space: nowrap;
         }
 
-        &>:global(.actions) {
+        & > :global(.actions) {
           display: flex;
 
           button {
@@ -170,7 +169,6 @@
     }
 
     tbody {
-
       tr,
       td {
         font-size: $spacing-4;
@@ -229,5 +227,4 @@
       margin-top: $spacing-4;
     }
   }
-
 }

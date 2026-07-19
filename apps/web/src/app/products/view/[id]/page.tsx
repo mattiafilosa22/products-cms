@@ -13,6 +13,7 @@ export default function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
   const router = useRouter();
   const { id } = use(params);
   const { getProductById, isLoading, data } = getProduct();

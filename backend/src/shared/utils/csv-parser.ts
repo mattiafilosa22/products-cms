@@ -1,40 +1,51 @@
-import fs from 'fs';
-import csv from 'csv-parser';
-import { createProductSchema } from '../../features/products/product.schema.ts';
+import fs from "fs";
+import csv from "csv-parser";
+import { createProductSchema } from "../../features/products/product.schema.ts";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
 export const parseProductsFromCsv = (filePath: string): Promise<any[]> => {
   return new Promise((resolve, reject) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: backend replaced by Route Handlers (Piece 5)
     const results: any[] = [];
 
     let rowCounter = 1; // Consider header as row 1, data starts at row 2
-    const stream = fs.createReadStream(filePath)
+    const stream = fs
+      .createReadStream(filePath)
       .pipe(csv())
-      .on('data', (data) => {
+      .on("data", (data) => {
         rowCounter++;
         // map and validate data
         const formattedProduct = createProductSchema.safeParse({
           name: data.name,
           description: data.description,
           price: parseFloat(data.price),
-          discountPrice: data.discountPrice ? parseFloat(data.discountPrice) : null,
-        })
+          discountPrice: data.discountPrice
+            ? parseFloat(data.discountPrice)
+            : null,
+        });
 
         // if validation fails reject
         if (!formattedProduct.success) {
           // block read stream
           stream.destroy();
-          const errorMessage = JSON.stringify(formattedProduct.error.flatten().fieldErrors);
-          reject(new Error(`Errore alla riga ${rowCounter}: Validazione fallita: ${errorMessage}`));
+          const errorMessage = JSON.stringify(
+            formattedProduct.error.flatten().fieldErrors,
+          );
+          reject(
+            new Error(
+              `Errore alla riga ${rowCounter}: Validazione fallita: ${errorMessage}`,
+            ),
+          );
         }
 
         results.push(formattedProduct.data);
       })
-      .on('end', () => {
+      .on("end", () => {
         // close stream
         stream.destroy();
         resolve(results);
       })
-      .on('error', (error) => {
+      .on("error", (error) => {
         // close stream
         stream.destroy();
         console.error("Error parsing CSV:", error);

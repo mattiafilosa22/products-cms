@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useCallback } from "react";
-import type { Dispatch, FC, ReactNode, SetStateAction } from "react";
+import type { FC, ReactNode, SetStateAction } from "react";
 import { TableState } from "../table-state";
 
 export interface TableContextValue {

@@ -1,33 +1,33 @@
-import { NextConfig } from 'next';
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
   reactStrictMode: true,
-  transpilePackages: ['mama'],
+  transpilePackages: ["mama"],
   webpack(config) {
     config.module.rules.push(
       {
         test: /\.svg$/i,
-        type: 'asset',
+        type: "asset",
         resourceQuery: /url/, // *.svg?url
       },
       {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
         resourceQuery: { not: [/url/] },
-        use: ['@svgr/webpack'],
-      }
+        use: ["@svgr/webpack"],
+      },
     );
     return config;
   },
   experimental: {
     turbo: {
       rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
         },
       },
     },
@@ -37,4 +37,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig; 
+export default nextConfig;

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styles from "./app-button.module.scss";
 import { BaseAction } from "../../types/global";
 
@@ -42,7 +42,7 @@ export const AppButton: React.FC<React.PropsWithChildren<AppButtonProps>> = ({
       ? `${className}`
       : `${styles.appButton} ${styles[variant]} ${styles[style]} ${styles[size]} ${loading ? styles.loading : ""} ${className}`;
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     if (onClick) onClick();
   };
 

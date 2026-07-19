@@ -27,19 +27,21 @@ export const InputText: React.FC<ContainerProps> = ({
     const val = e.target.value;
 
     onChange?.(val);
-  }
+  };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     const val = e.target.value;
 
     onBlur?.(val);
-  }
+  };
 
   const Icon = icon;
 
   return (
     <div className={styles.appInputText}>
-      <div className={`${styles.inputContainer} ${readonly ? "readonly-field" : ""} ${error ? styles.inputError : ""} ${skinny ? styles.skinny : ""}`}>
+      <div
+        className={`${styles.inputContainer} ${readonly ? "readonly-field" : ""} ${error ? styles.inputError : ""} ${skinny ? styles.skinny : ""}`}
+      >
         <input
           id={name}
           ref={ref}

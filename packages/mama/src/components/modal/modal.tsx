@@ -1,4 +1,9 @@
-import React, { cloneElement, isValidElement, JSX, useEffect, useState } from "react";
+import React, {
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useState,
+} from "react";
 import "reactjs-popup/dist/index.css";
 import { ModalProvider } from "./modal-context";
 import { ModalInner } from "./components/modal-inner";

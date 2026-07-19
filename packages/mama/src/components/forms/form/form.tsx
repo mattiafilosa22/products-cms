@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 export type FormProps<T extends FieldValues> = {
   children: React.ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
   form: UseFormReturn<T, any, T>;
   onSubmit?: SubmitHandler<T>;
   className?: string;
@@ -27,7 +28,7 @@ export const Form = <T extends FieldValues = FieldValues>({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSubmit && form.handleSubmit(onSubmit)();
+    if (onSubmit) form.handleSubmit(onSubmit)();
   };
 
   useEffect(() => {

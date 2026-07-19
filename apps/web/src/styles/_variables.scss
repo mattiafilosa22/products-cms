@@ -1,4 +1,4 @@
-@use 'colors' as *;
+@use "colors" as *;
 
 // --- Font Size ---
 $font-size-3: 12px;
@@ -100,7 +100,7 @@ $table-pagination-border: $white;
 $table-pagination-color: $black;
 $table-border: $grey-300;
 $table-row-color-odd: $white;
-$table-row-color-even: #F9F9F9;
+$table-row-color-even: #f9f9f9;
 $table-row-hover: $green-300;
 $table-cell-width: 209px;
 $table-filter-width: 160px;

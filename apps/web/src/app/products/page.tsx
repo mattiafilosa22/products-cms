@@ -7,6 +7,7 @@ import PageWrapper from "./_layout/page-wrapper/page-wrapper";
 import { ImportModal } from "./_components/import-modal/import-modal";
 
 export default function ProductsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
   const { data, isLoading, error, getProducts } = getAllProducts();
 
   useEffect(() => {

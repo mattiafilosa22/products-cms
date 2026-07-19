@@ -11,4 +11,4 @@ export type TableActionConfig<T> = BaseAction & {
   variant?: "primary" | "danger" | "neutral" | "custom";
   style?: "filled" | "outlined" | "link";
   disabled?: (rowData: T) => boolean;
-}
+};

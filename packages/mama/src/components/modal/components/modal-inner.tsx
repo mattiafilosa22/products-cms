@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import style from "./../modal.module.scss";
 import { ModalHeader } from "./modal-header";
 import { ModalFooter } from "./modal-footer";
@@ -13,9 +13,9 @@ interface ModalInnerProps {
 export const ModalInner: React.FC<ModalInnerProps> = ({
   children,
   size,
-  styleButtons = "default"
+  styleButtons = "default",
 }) => {
-  const {tryClose} = useModalContext();
+  const { tryClose } = useModalContext();
 
   const onCloseClick = useCallback(() => {
     tryClose(true);
@@ -28,9 +28,7 @@ export const ModalInner: React.FC<ModalInnerProps> = ({
       <div className={`${style.modal} ${style[size]}`}>
         <ModalHeader />
 
-        <div className={style.modalContent}>
-          {children}
-        </div>
+        <div className={style.modalContent}>{children}</div>
 
         <ModalFooter styleButtons={styleButtons} />
       </div>

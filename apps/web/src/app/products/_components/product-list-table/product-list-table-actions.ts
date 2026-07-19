@@ -5,29 +5,28 @@ import { Product } from "@/api/products/_type";
 
 export const getActions = (
   handleEdit: (event: Product) => void,
-  handleDelete: (event: Product) => void
+  handleDelete: (event: Product) => void,
 ): TableActionConfig<Product>[] => {
-
   return [
     {
-      key: 'edit',
-      label: 'Common.action_edit',
+      key: "edit",
+      label: "Common.action_edit",
       icon: IconEdit,
       action: handleEdit,
-      type: 'primary',
-      variant: 'neutral',
-      style: 'link',
+      type: "primary",
+      variant: "neutral",
+      style: "link",
     },
     {
-      key: 'delete',
+      key: "delete",
       label: "Common.action_delete",
-      modalContentTitle: 'Elimina',
-      modalContentBody: 'Sei sicuro di voler eliminare questo prodotto?',
+      modalContentTitle: "Elimina",
+      modalContentBody: "Sei sicuro di voler eliminare questo prodotto?",
       icon: IconBin,
       action: handleDelete,
-      type: 'secondary',
-      variant: 'danger',
-      style: 'link',
+      type: "secondary",
+      variant: "danger",
+      style: "link",
     },
-  ]
-}
+  ];
+};

@@ -28,11 +28,11 @@ const main = async () => {
 
   // insert fake products
   await prisma.product.createMany({
-    data: fakeProducts
+    data: fakeProducts,
   });
 
   console.log("✅ 50 prodotti inseriti con successo!");
-}
+};
 
 main()
   .then(async () => {

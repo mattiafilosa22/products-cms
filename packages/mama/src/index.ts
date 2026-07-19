@@ -7,7 +7,10 @@ export type { LoaderProps } from "./components/loader/loader";
 
 // Modal (compound component + context)
 export { Modal } from "./components/modal/modal";
-export { ModalProvider, useModalContext } from "./components/modal/modal-context";
+export {
+  ModalProvider,
+  useModalContext,
+} from "./components/modal/modal-context";
 export type { ModalResult } from "./components/modal/modal-result";
 
 // Form

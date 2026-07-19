@@ -24,12 +24,14 @@ export interface FormFieldProps {
    * Use onChange prop if you need more control over input fields
    * (e.g. reset form fields when input changes)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
   onChange?: (e?: any) => void;
 
   /**
    * Use onBlur prop if you need more control over input fields
    * (e.g. perform actions on form fields when input blurs)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
   onBlur?: (e?: any) => void;
 }
 
@@ -48,35 +50,37 @@ export const FormField = ({
   readonly = false,
   hideError = false,
 }: FormFieldProps) => {
-
   const handleChange = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
     (rhfOnChange: (...event: any[]) => void) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
       return (e: any) => {
         rhfOnChange(e);
         onChange?.(e);
       };
     },
-    [onChange]
+    [onChange],
   );
 
   const handleBlur = useCallback(
     (rhfOnBlur: Noop) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: removed in Piece 3 (typed render prop)
       return (e: any) => {
         rhfOnBlur();
         onBlur?.(e);
       };
     },
-    [onBlur]
+    [onBlur],
   );
 
   const labelValue = useMemo(
-    () => (labelKey ? (labelKey) : label),
-    [label, labelKey]
+    () => (labelKey ? labelKey : label),
+    [label, labelKey],
   );
 
   const placeholderValue = useMemo(
-    () => (placeholderKey ? (placeholderKey) : placeholder),
-    [placeholder, placeholderKey]
+    () => (placeholderKey ? placeholderKey : placeholder),
+    [placeholder, placeholderKey],
   );
 
   const rulesValue = useMemo(() => {
@@ -143,10 +147,10 @@ export const FormField = ({
                   value: field.value,
                   placeholder: placeholderValue,
                   readonly: readonly,
-                } as InputConfig
+                } as InputConfig,
               )}
               <div className={styles.formFieldError}>
-                {hideError ? "" : fieldState.error?.message ?? ""}
+                {hideError ? "" : (fieldState.error?.message ?? "")}
               </div>
             </div>
           );

@@ -1,5 +1,5 @@
 @use "@/styles/variables" as *;
-@use '@/styles/colors' as *;
+@use "@/styles/colors" as *;
 
 .appButton {
   padding: 0 $spacing-3;
@@ -25,13 +25,13 @@
     &.danger {
       background: $red-500;
       color: $white;
-      border-color: $red-500
+      border-color: $red-500;
     }
 
     &.neutral {
       background: $black;
       color: var(--color-neutral-inverse);
-      border-color: $black
+      border-color: $black;
     }
     &.white {
       background: $white;
@@ -64,15 +64,14 @@
 
     &.dashed {
       border: 1px dashed $green-400;
-      color: $green-400
+      color: $green-400;
     }
 
     &.empty {
-      border-color: none!important;
+      border-color: none !important;
 
       &:focus {
-      border-color: $interactive-base-default;
-
+        border-color: $interactive-base-default;
       }
     }
   }
@@ -108,7 +107,7 @@
     font-weight: 600;
     line-height: $spacing-6; /* 150% */
     letter-spacing: -0.24px;
-    padding: 0!important;
+    padding: 0 !important;
     display: flex;
     flex-direction: row-reverse;
   }
@@ -156,15 +155,12 @@
     }
 
     &.secondary {
-
     }
 
     &.outline {
-
     }
 
     &.loading {
-
     }
   }
 
