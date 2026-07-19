@@ -7,14 +7,9 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   // Styles and icons stay as files: the consumer app's bundler processes them.
-  // Runtime libraries used by the sources are not inlined: they stay external
-  // until they are declared in mama's package.json (cleanup in later pieces).
-  external: [
-    /\.module\.scss$/,
-    /\.svg$/,
-    /^reactjs-popup/,
-    "react-toastify",
-    "react-paginate",
-    "@hookform/devtools",
-  ],
+  // Runtime libraries are external via the manifest: tsup treats dependencies
+  // and peerDependencies declared in package.json as external by default.
+  // @hookform/devtools is deliberately NOT in the manifest (known debt, removed
+  // in Piece 3), so it must be listed here or tsup would inline it.
+  external: [/\.module\.scss$/, /\.svg$/, "@hookform/devtools"],
 });

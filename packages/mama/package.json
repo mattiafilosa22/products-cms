@@ -9,10 +9,15 @@
   "scripts": {
     "build": "tsup"
   },
+  "dependencies": {
+    "react-paginate": "^8.3.0",
+    "reactjs-popup": "^2.0.6"
+  },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.0.0",
+    "react-toastify": "^11.0.5",
     "@tanstack/react-table": "^8.0.0"
   },
   "devDependencies": {

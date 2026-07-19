@@ -42,6 +42,8 @@ export const Form = <T extends FieldValues = FieldValues>({
       <form id={id} noValidate onSubmit={handleSubmit} className={className}>
         {children}
       </form>
+      {/* Known debt: dev tooling inside a library component ships to consumers;
+          removed/made opt-in in Piece 3 (Form refactor). */}
       <DevTool control={form.control} />
     </FormProvider>
   );
