@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import styles from "./app-button.module.scss";
-import { BaseAction } from "@/app/_shared/types/global";
+import { BaseAction } from "../../types/global";
 
 type AppButtonProps = BaseAction & {
   variant?:

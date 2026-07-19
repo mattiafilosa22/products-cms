@@ -5,7 +5,7 @@ import {
   InputPrice,
   InputText,
   TextArea,
-} from "@/app/_shared/components/forms";
+} from "mama";
 import { useForm, useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

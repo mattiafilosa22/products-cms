@@ -1,5 +1,5 @@
 import React from "react";
-import Cross from "@/assets/icons/cross.svg";
+import Cross from "../../../assets/icons/cross.svg";
 import style from "../modal.module.scss";
 import { AppButton } from "../../app-button/app-button";
 import { useModalContext } from "../modal-context";

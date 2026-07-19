@@ -1,6 +1,6 @@
 import IconEdit from "@/assets/icons/edit.svg";
 import IconBin from "@/assets/icons/bin.svg";
-import { TableActionConfig } from "@/app/_shared/table/table-action-config";
+import { TableActionConfig } from "mama";
 import { Product } from "@/api/products/_type";
 
 export const getActions = (

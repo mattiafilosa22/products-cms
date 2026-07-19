@@ -11,7 +11,7 @@ interface ContainerProps {
 }
 
 import { useRouter } from "next/navigation";
-import { AppButton } from "@/app/_shared/components";
+import { AppButton } from "mama";
 import IconArrowLeft from "@/assets/icons/caret-left.svg";
 
 const PageWrapper: React.FC<ContainerProps> = ({

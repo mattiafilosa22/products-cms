@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TableContextProvider } from "./parts/table-context";
 import { TableInner } from "./parts/table-inner";
 import { TableActionConfig } from "./table-action-config";
-import { PaginationData } from "@/api/paginationData";
+import { PaginationData } from "./pagination-data";
 import { TableState } from "./table-state";
 
 type ContainerProps<TData> = {

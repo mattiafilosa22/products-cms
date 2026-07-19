@@ -1,5 +1,5 @@
-import { Modal } from "@/app/_shared/components";
-import { AppButton } from "@/app/_shared/components/app-button/app-button";
+import { Modal } from "mama";
+import { AppButton } from "mama";
 import IconPlus from "@/assets/icons/plus.svg";
 import { ImportModalInner } from "./import-modal-inner";
 

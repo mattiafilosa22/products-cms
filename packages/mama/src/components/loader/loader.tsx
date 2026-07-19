@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./loader.module.scss";
-import IconLoading from "@/assets/loading.svg";
+import IconLoading from "../../assets/icons/loading.svg";
 
 export interface LoaderProps {
   size?: "sm" | "md" | "lg";

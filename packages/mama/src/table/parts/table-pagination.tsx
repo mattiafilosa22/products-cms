@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import ReactPaginate from "react-paginate";
-import IconCaretLeft from "@/assets/icons/caret-left.svg";
-import IconCaretRight from "@/assets/icons/caret-right.svg";
+import IconCaretLeft from "../../assets/icons/caret-left.svg";
+import IconCaretRight from "../../assets/icons/caret-right.svg";
 import style from "../table.module.scss";
 
 interface PaginationProps {

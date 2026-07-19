@@ -8,16 +8,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
-import { PaginationData } from "@/api/paginationData";
+import { PaginationData } from "../pagination-data";
 import { useTableContext } from "./table-context";
 import { TablePagination } from "./table-pagination";
 import style from "../table.module.scss";
-import IconLoading from "@/assets/loading.svg";
-import IconCaretUp from "@/assets/icons/caret-up.svg";
-import IconCaretDown from "@/assets/icons/caret-down.svg";
+import IconLoading from "../../assets/icons/loading.svg";
+import IconCaretUp from "../../assets/icons/caret-up.svg";
+import IconCaretDown from "../../assets/icons/caret-down.svg";
 import { TableActionConfig } from "../table-action-config";
-import { AppButton, Modal, useModalContext } from "@/app/_shared/components";
-import { ModalResult } from "@/app/_shared/components/modal/modal-result";
+import { AppButton, Modal, useModalContext } from "../../components";
+import { ModalResult } from "../../components/modal/modal-result";
 import { TableState } from "../table-state";
 
 type ContainerProps<TData> = {

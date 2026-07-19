@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   reactStrictMode: true,
+  transpilePackages: ['mama'],
   webpack(config) {
     config.module.rules.push(
       {

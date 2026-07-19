@@ -1,6 +1,6 @@
 "use client";
 
-import { AppButton, Modal, useModalContext } from "@/app/_shared/components";
+import { AppButton, Modal, useModalContext } from "mama";
 import { useEffect } from "react";
 
 interface DeleteProductButtonProps {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { PaginationData } from "@/api/paginationData";
-import { Table, TableState } from "@/app/_shared/table";
+import { PaginationData } from "mama";
+import { Table, TableState } from "mama";
 import { GetAllProductsRequest } from "@/api/products/_getAllProducts";
 import { getColumns } from "./product-list-table-columns";
 import { getActions } from "./product-list-table-actions";
