@@ -1,7 +1,8 @@
 @use "@/styles/variables" as *;
 
-// Scroll lock while any modal dialog is open.
-:global(body:has(dialog[open])) {
+// Scroll lock while a modal dialog is open. The local .modal class keeps the
+// selector "pure" for css-loader (pure-global selectors break `next build`).
+:global(body):has(.modal[open]) {
   overflow: hidden;
 }
 

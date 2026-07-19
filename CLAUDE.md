@@ -9,21 +9,22 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 > **Spec normativa**: `docs/superpowers/specs/2026-07-19-mama-ui-library-design.md`
 > (contesto, decisioni, roadmap in 8 pezzi, criteri di successo). Leggerla prima di ogni plan.
-> **Stato attuale**: Pezzo 4 completato. Monorepo npm workspaces attivo: app in `apps/web`,
-> UI library in `packages/mama` (build tsup con `.d.ts`, suite Vitest, CI GitHub Actions).
-> `FormField` a render prop tipizzata, zero `any` in mama; Modal su `<dialog>` nativo
-> (focus trap/Esc/backdrop dal browser, `aria-labelledby`, scroll lock) con Annulla/Esc/
-> backdrop → `ModalResult = false`; `reactjs-popup` rimossa. Breaking dei Pezzi 3-4 da
-> documentare nel CHANGELOG del Pezzo 7. Il backend Express è ancora in `backend/`.
-> Prossimo: Pezzo 5 (backend dentro Next: Route Handlers + Prisma).
+> **Stato attuale**: Pezzo 5 completato. App full-stack unica: `backend/` non esiste più,
+> l'API REST vive in Route Handlers (`apps/web/src/app/api/products/…`) con gli stessi
+> contratti dell'ex Express (collection Postman valida, `BASE_URL=http://localhost:3000/api`);
+> Prisma/seed in `apps/web/prisma`, codice server in `apps/web/src/server`;
+> `docker-compose.yml` ridotto al solo PostgreSQL. mama: render prop tipizzata, Modal su
+> `<dialog>`, suite Vitest, CI attiva. Breaking dei Pezzi 3-4-5 da documentare nel CHANGELOG
+> del Pezzo 7. Debito noto: `NEXT_PUBLIC_API_KEY` esposta al browser (da sistemare nel Pezzo 6).
+> Prossimo: Pezzo 6 (TanStack Query in apps/web).
 > Aggiornare questa nota man mano che i pezzi si chiudono.
 
 ## Stack & vincoli (non negoziabili)
 
-- **App** (`apps/web`, target): Next.js 15 (App Router) + React 19 + TypeScript 5 `strict`;
-  **Route Handlers REST** in `src/app/api/` con gli stessi contratti dell'API Express attuale
-  (la collection Postman resta valida — niente Server Actions); Prisma 5 + PostgreSQL
-  (Docker, solo db); validazione input con Zod ai confini; styling SCSS modules.
+- **App** (`apps/web`): Next.js 15 (App Router) + React 19 + TypeScript 5 `strict`;
+  **Route Handlers REST** in `src/app/api/` con i contratti storici documentati dalla
+  collection Postman (niente Server Actions); Prisma 5 + PostgreSQL (Docker, solo db);
+  validazione input con Zod ai confini; styling SCSS modules.
 - **Form**: React Hook Form 7. **Tabelle**: TanStack Table v8 (headless).
 - **Data fetching**: TanStack Query in `apps/web` (Pezzo 6); axios come client HTTP.
 - **Libreria mama** (`packages/mama`, target): npm workspaces, build **tsup** (ESM + `.d.ts`),

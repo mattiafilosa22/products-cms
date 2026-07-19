@@ -1,36 +1,36 @@
 # Products CMS
 
-Monorepo npm workspaces: l'app Next.js gira in locale, mentre database PostgreSQL e
-backend Express girano in Docker.
+Monorepo npm workspaces: un'unica applicazione full-stack Next.js (frontend + API REST
+come Route Handlers) con PostgreSQL in Docker.
 
 ## Struttura del repo
 
 ```text
 products-cms/
 ├─ apps/
-│  └─ web/            # app Next.js (frontend)
+│  └─ web/            # app Next.js full-stack (UI + Route Handlers in src/app/api)
+│     ├─ prisma/      # schema, seed
+│     └─ src/server/  # codice solo-server: prisma, auth, service prodotti, csv
 ├─ packages/
 │  └─ mama/           # UI library condivisa (build tsup)
-├─ backend/           # API Express + Prisma (migra dentro apps/web col Pezzo 5)
 ├─ postman/           # collection e environment per testare le API
-└─ docker-compose.yml # PostgreSQL + backend
+└─ docker-compose.yml # solo PostgreSQL
 ```
 
 ## Requisiti Preliminari
 
-Prima di avviare, configurare le variabili d'ambiente:
-
-1. Entrare nella cartella `/backend` e rinominare `.env.example` in `.env`
-2. Fare lo stesso nella cartella `/apps/web`
+Prima di avviare, configurare le variabili d'ambiente: entrare nella cartella
+`/apps/web` e rinominare `.env.example` in `.env`.
 
 ## Come avviare l'applicazione (sviluppo)
 
 Dalla root del progetto:
 
 ```bash
-docker compose up -d   # avvia database e backend (porta 3008)
+docker compose up -d   # avvia PostgreSQL
 npm install            # installa i workspace
-npm run dev:web        # avvia l'app Next.js su http://localhost:3000
+npm run db:push        # allinea lo schema del database
+npm run dev:web        # avvia l'app su http://localhost:3000 (API su /api)
 ```
 
 ## Comandi di qualità
@@ -41,6 +41,7 @@ Dalla root del progetto:
 npm run typecheck             # type check su tutti i workspace
 npm run lint                  # eslint sull'intero monorepo
 npm run format:check          # prettier --check
+npm run test                  # vitest (package mama)
 npm run build --workspace mama  # build della UI library
 ```
 
@@ -48,24 +49,22 @@ npm run build --workspace mama  # build della UI library
 
 Anche se la traccia prevede l'inserimento prodotti esclusivamente tramite CSV, ho incluso uno script di **seeding** per facilitare una valutazione immediata della tabella e della UI senza dover caricare file manualmente.
 
-Per popolare il database con dati di test:
+Per popolare il database con dati di test, con il database attivo:
 
-1. Assicurarsi che i container siano attivi.
-2. Eseguire nel terminale:
-   ```bash
-   docker compose exec backend npx prisma db seed
-
-   ```
+```bash
+npm run seed
+```
 
 ## Testing con Postman
 
 Nella cartella `/postman` sono presenti la Collection e l'Environment per testare le API.
 
 1. Importa i file su Postman.
-2. Seleziona l'environment `ProductCMS`.
+2. Seleziona l'environment `ProductCMS` e imposta `BASE_URL` a `http://localhost:3000/api`
+   (e `ADMIN_API_KEY` al valore del tuo `.env`).
 3. Le richieste includono già l'header `x-api-key` configurato tramite variabile.
 
-> **Nota**: Assicurati che i container siano attivi (`docker compose up -d`) prima di inviare le richieste.
+> **Nota**: l'app deve essere attiva (`npm run dev:web`) prima di inviare le richieste.
 
 ## Testing Importazione CSV
 
@@ -105,36 +104,5 @@ Fermare il dev server con `Ctrl+C`, poi dalla root del progetto:
 docker compose down
 ```
 
-Se non si dispone di Docker, seguire questi passaggi:
-
-### Database: Assicurarsi di avere un'istanza PostgreSQL attiva.
-
-### Backend
-
-```bash
-cd backend
-```
-
-```bash
-npm install
-```
-
-```bash
-npx prisma generate
-```
-
-```bash
-npm run dev
-```
-
-### App web
-
-Dalla root del progetto:
-
-```bash
-npm install
-```
-
-```bash
-npm run dev:web
-```
+Se non si dispone di Docker: assicurarsi di avere un'istanza PostgreSQL attiva e
+aggiornare `DATABASE_URL` in `apps/web/.env`, poi seguire gli stessi comandi npm.
