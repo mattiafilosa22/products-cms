@@ -1,43 +1,29 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { PaginationData } from "mama";
-import { Table, TableState } from "mama";
-import { GetAllProductsRequest } from "@/api/products/_getAllProducts";
-import { getColumns } from "./product-list-table-columns";
-import { getActions } from "./product-list-table-actions";
+import { useCallback, useMemo } from "react";
+import { PaginationData, Table, TableState } from "mama";
 import { useRouter } from "next/navigation";
 import { Product } from "@/api/products/_type";
-import { useDeleteProduct } from "@/api/products/_deleteProduct";
+import { useDeleteProductMutation } from "@/api/products/_useDeleteProductMutation";
+import type { ProductsQueryParams } from "@/api/products/_useProductsQuery";
+import { getColumns } from "./product-list-table-columns";
+import { getActions } from "./product-list-table-actions";
 
-interface ProductListTableProps<TTableOptions extends object> {
+const DEFAULT_LIMIT = 10;
+
+interface ProductListTableProps {
   data?: Product[];
   pagination?: PaginationData;
-  onOptionsChange: (options: TTableOptions) => void;
+  onOptionsChange: (options: ProductsQueryParams) => void;
   isDataLoading?: boolean;
 }
 
 export const ProductListTable = ({
-  data = undefined,
+  data,
   pagination,
   onOptionsChange,
   isDataLoading = false,
-}: ProductListTableProps<GetAllProductsRequest>) => {
-  const {
-    deleteProduct,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
-    isLoading: isDeletingProduct,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
-    error,
-  } = useDeleteProduct();
-
-  // Local state to manage data updates after soft delete
-  const [localData, setLocalData] = useState<Product[] | undefined>(data);
-
-  // Sync local data with incoming data prop
-  useEffect(() => {
-    setLocalData(data);
-  }, [data]);
-
+}: ProductListTableProps) => {
   const router = useRouter();
+  const deleteProductMutation = useDeleteProductMutation();
 
   const onRowClick = useCallback(
     (rowData: Product) => {
@@ -47,33 +33,29 @@ export const ProductListTable = ({
   );
 
   const handleEdit = useCallback(
-    (event: Product) => {
-      router.push(`/products/edit/${event.id}`);
+    (rowData: Product) => {
+      router.push(`/products/edit/${rowData.id}`);
     },
     [router],
   );
 
   const handleDelete = useCallback(
-    async (event: Product) => {
-      const response = await deleteProduct(event.id);
-      if (response) {
-        onOptionsChange({
-          page: pagination?.page || 1,
-          limit: pagination?.limit || 10,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: typed with the data layer refactor (Piece 6)
-        } as any);
+    async (rowData: Product) => {
+      try {
+        await deleteProductMutation.mutateAsync(rowData.id);
+      } catch {
+        // Failure is already surfaced via the mutation's onError toast.
       }
     },
-    [deleteProduct, onOptionsChange, pagination],
+    [deleteProductMutation],
   );
 
   const handleStateChange = useCallback(
     (state: TableState) => {
       onOptionsChange({
         page: state.page + 1,
-        limit: pagination?.limit || 10,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- known debt: typed with the data layer refactor (Piece 6)
-      } as any);
+        limit: pagination?.limit ?? DEFAULT_LIMIT,
+      });
     },
     [onOptionsChange, pagination?.limit],
   );
@@ -88,7 +70,7 @@ export const ProductListTable = ({
 
   return (
     <Table<Product>
-      data={localData}
+      data={data}
       pagination={pagination}
       columns={columns}
       actions={actions}

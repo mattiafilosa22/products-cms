@@ -1,33 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
-import { getAllProducts } from "@/api/products/_getAllProducts";
+import { useState } from "react";
+import {
+  useProductsQuery,
+  type ProductsQueryParams,
+} from "@/api/products/_useProductsQuery";
 import { ProductListTable } from "./_components/product-list-table/product-list-table";
 import PageWrapper from "./_layout/page-wrapper/page-wrapper";
 import { ImportModal } from "./_components/import-modal/import-modal";
 
-export default function ProductsPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
-  const { data, isLoading, error, getProducts } = getAllProducts();
+const DEFAULT_QUERY_PARAMS: ProductsQueryParams = { page: 1, limit: 10 };
 
-  useEffect(() => {
-    getProducts({ page: 1, limit: 10 });
-  }, [getProducts]);
+export default function ProductsPage() {
+  const [queryParams, setQueryParams] =
+    useState<ProductsQueryParams>(DEFAULT_QUERY_PARAMS);
+  const { data, isLoading } = useProductsQuery(queryParams);
 
   return (
     <PageWrapper
       title="Prodotti"
-      actionButtons={[
-        <ImportModal
-          key="import-product-modal"
-          onSuccess={() => getProducts({ page: 1, limit: 10 })}
-        />,
-      ]}
+      actionButtons={[<ImportModal key="import-product-modal" />]}
     >
       <ProductListTable
         data={data?.data}
         pagination={data?.pagination}
-        onOptionsChange={getProducts}
+        onOptionsChange={setQueryParams}
         isDataLoading={isLoading}
       />
     </PageWrapper>

@@ -3,7 +3,7 @@ import { AppButton } from "mama";
 import IconPlus from "@/assets/icons/plus.svg";
 import { ImportModalInner } from "./import-modal-inner";
 
-export const ImportModal = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const ImportModal = () => {
   return (
     <Modal
       trigger={
@@ -15,7 +15,7 @@ export const ImportModal = ({ onSuccess }: { onSuccess?: () => void }) => {
         />
       }
     >
-      <ImportModalInner onSuccess={onSuccess} />
+      <ImportModalInner />
     </Modal>
   );
 };

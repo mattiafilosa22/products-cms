@@ -53,13 +53,7 @@
           "name": "CREATE Product",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "x-api-key",
-                "value": "{{ADMIN_API_KEY}}",
-                "type": "text"
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"name\": \"Prodotto-nuovo\",\n    \"description\": \"\",\n    \"price\": \"100\",\n    \"discountPrice\": \"1\"\n}",
@@ -85,13 +79,7 @@
           "name": "UPDATE Product",
           "request": {
             "method": "PUT",
-            "header": [
-              {
-                "key": "x-api-key",
-                "value": "{{ADMIN_API_KEY}}",
-                "type": "text"
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"name\": \"Test124\",\n    \"description\": \"\",\n    \"price\": \"100\",\n    \"discountPrice\": \"1\"\n}",
@@ -118,13 +106,7 @@
           "name": "DELETE Product",
           "request": {
             "method": "DELETE",
-            "header": [
-              {
-                "key": "x-api-key",
-                "value": "{{ADMIN_API_KEY}}",
-                "type": "text"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{BASE_URL}}/products/46",
               "host": [
@@ -142,13 +124,7 @@
           "name": "IMPORT File",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "x-api-key",
-                "value": "{{ADMIN_API_KEY}}",
-                "type": "text"
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "formdata",
               "formdata": [

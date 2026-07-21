@@ -41,8 +41,9 @@ Dalla root del progetto:
 npm run typecheck             # type check su tutti i workspace
 npm run lint                  # eslint sull'intero monorepo
 npm run format:check          # prettier --check
-npm run test                  # vitest (package mama)
+npm run test                  # vitest (package mama e app web)
 npm run build --workspace mama  # build della UI library
+npm run build --workspace web    # build dell'app Next.js
 ```
 
 ## Dati di Test (Seeding)
@@ -60,9 +61,7 @@ npm run seed
 Nella cartella `/postman` sono presenti la Collection e l'Environment per testare le API.
 
 1. Importa i file su Postman.
-2. Seleziona l'environment `ProductCMS` e imposta `BASE_URL` a `http://localhost:3000/api`
-   (e `ADMIN_API_KEY` al valore del tuo `.env`).
-3. Le richieste includono già l'header `x-api-key` configurato tramite variabile.
+2. Seleziona l'environment `ProductCMS` e imposta `BASE_URL` a `http://localhost:3000/api`.
 
 > **Nota**: l'app deve essere attiva (`npm run dev:web`) prima di inviare le richieste.
 

@@ -1,12 +1,8 @@
 import { NextRequest } from "next/server";
-import { requireApiKey } from "@/server/auth";
 import * as productService from "@/server/products/product-service";
 import { parseProductsFromCsv } from "@/server/products/csv-parser";
 
 export async function POST(request: NextRequest) {
-  const unauthorized = requireApiKey(request);
-  if (unauthorized) return unauthorized;
-
   // Non-multipart requests behave like multer with no file: "File mancante".
   const formData = await request.formData().catch(() => null);
   const file = formData?.get("file");

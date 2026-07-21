@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { requireApiKey } from "@/server/auth";
 import { parseJsonBody } from "@/server/http";
 import * as productService from "@/server/products/product-service";
 import { updateProductSchema } from "@/server/products/product.schema";
@@ -34,9 +33,6 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 export async function PUT(request: NextRequest, context: RouteContext) {
-  const unauthorized = requireApiKey(request);
-  if (unauthorized) return unauthorized;
-
   try {
     const id = Number((await context.params).id);
     if (isNaN(id)) {
@@ -78,9 +74,6 @@ export async function PUT(request: NextRequest, context: RouteContext) {
 }
 
 export async function DELETE(request: NextRequest, context: RouteContext) {
-  const unauthorized = requireApiKey(request);
-  if (unauthorized) return unauthorized;
-
   try {
     const id = Number((await context.params).id);
     if (isNaN(id)) {

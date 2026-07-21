@@ -1,13 +1,13 @@
 import { useModalContext } from "mama";
 import { toast } from "react-toastify";
-import { useImportProduct } from "@/api/products/_importProduct";
+import { useImportProductsMutation } from "@/api/products/_useImportProductsMutation";
 import { useEffect, useState } from "react";
 import styles from "./import-modal.module.scss";
 import { InputFile } from "mama";
 
-export const ImportModalInner = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const ImportModalInner = () => {
   const { setTitle, setConfirmConfig, tryClose } = useModalContext();
-  const { importProduct, isLoading } = useImportProduct();
+  const importProductsMutation = useImportProductsMutation();
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -17,21 +17,22 @@ export const ImportModalInner = ({ onSuccess }: { onSuccess?: () => void }) => {
   const handleImport = async () => {
     if (!file) return;
 
-    const result = await importProduct(file);
-    if (result) {
-      onSuccess?.();
+    try {
+      await importProductsMutation.mutateAsync(file);
       tryClose();
+    } catch (error) {
+      console.error(error);
     }
   };
 
   useEffect(() => {
     setConfirmConfig({
       label: "Importa",
-      disabled: !file || isLoading,
-      loading: isLoading,
+      disabled: !file || importProductsMutation.isPending,
+      loading: importProductsMutation.isPending,
       onClick: handleImport,
     });
-  }, [file, isLoading, setConfirmConfig]);
+  }, [file, importProductsMutation.isPending, setConfirmConfig]);
 
   return (
     <div className={styles.importModal}>

@@ -9,14 +9,18 @@ Priorità: codice semplice e leggibile, tipi rigorosi, comportamento coperto da 
 
 > **Spec normativa**: `docs/superpowers/specs/2026-07-19-mama-ui-library-design.md`
 > (contesto, decisioni, roadmap in 8 pezzi, criteri di successo). Leggerla prima di ogni plan.
-> **Stato attuale**: Pezzo 5 completato. App full-stack unica: `backend/` non esiste più,
+> **Stato attuale**: Pezzo 6 completato. App full-stack unica: `backend/` non esiste più,
 > l'API REST vive in Route Handlers (`apps/web/src/app/api/products/…`) con gli stessi
 > contratti dell'ex Express (collection Postman valida, `BASE_URL=http://localhost:3000/api`);
 > Prisma/seed in `apps/web/prisma`, codice server in `apps/web/src/server`;
 > `docker-compose.yml` ridotto al solo PostgreSQL. mama: render prop tipizzata, Modal su
-> `<dialog>`, suite Vitest, CI attiva. Breaking dei Pezzi 3-4-5 da documentare nel CHANGELOG
-> del Pezzo 7. Debito noto: `NEXT_PUBLIC_API_KEY` esposta al browser (da sistemare nel Pezzo 6).
-> Prossimo: Pezzo 6 (TanStack Query in apps/web).
+> `<dialog>`, suite Vitest, CI attiva. Pagine prodotti su TanStack Query
+> (`QueryClientProvider` in `src/app/providers.tsx`; fetcher/hook layer in `src/api/products/`,
+> Vitest attivo anche in `apps/web`). Rimosso il finto gate `x-api-key`/`NEXT_PUBLIC_API_KEY`:
+> le route di scrittura (`POST`/`PUT`/`DELETE` su `/api/products`) oggi **non hanno alcuna
+> autenticazione reale** — gap noto, da affrontare in un pezzo futuro non ancora pianificato
+> (nessun sistema di login/sessione esiste nella roadmap attuale). Breaking dei Pezzi 3-4-5 da
+> documentare nel CHANGELOG del Pezzo 7. Prossimo: Pezzo 7 (versioning e release di mama).
 > Aggiornare questa nota man mano che i pezzi si chiudono.
 
 ## Stack & vincoli (non negoziabili)

@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { requireApiKey } from "@/server/auth";
 import { parseJsonBody } from "@/server/http";
 import * as productService from "@/server/products/product-service";
 import { createProductSchema } from "@/server/products/product.schema";
@@ -30,9 +29,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const unauthorized = requireApiKey(request);
-  if (unauthorized) return unauthorized;
-
   try {
     // Empty body = {}, malformed JSON = 400 (same semantics as express.json()).
     const body = await parseJsonBody(request);

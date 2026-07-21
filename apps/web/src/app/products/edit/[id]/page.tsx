@@ -1,14 +1,14 @@
 "use client";
 
-import { getProduct } from "@/api/products/_getProduct";
-import { useEffect, use } from "react";
+import { use } from "react";
 import { ProductForm } from "../../_components/product-form/product-form";
 import { Product } from "@/api/products/_type";
-import { useUpdateProduct } from "@/api/products/_updateProduct";
+import { useProductQuery } from "@/api/products/_useProductQuery";
+import { useUpdateProductMutation } from "@/api/products/_useUpdateProductMutation";
+import { useDeleteProductMutation } from "@/api/products/_useDeleteProductMutation";
 import PageWrapper from "../../_layout/page-wrapper/page-wrapper";
 import { Loader } from "mama";
 import { useRouter } from "next/navigation";
-import { useDeleteProduct } from "@/api/products/_deleteProduct";
 import { FormSidebar } from "@/app/products/_layout/form-sidebar/form-sidebar";
 
 export default function EditProductPage({
@@ -18,24 +18,15 @@ export default function EditProductPage({
 }) {
   const router = useRouter();
   const { id } = use(params);
-  const { getProductById, isLoading, data } = getProduct();
-  const {
-    updateProduct,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- pre-existing unused binding, cleanup deferred
-    data: dataUpdateProduct,
-    isLoading: isLoadingUpdateProduct,
-  } = useUpdateProduct();
+  const productId = Number(id);
 
-  const { deleteProduct, isLoading: isLoadingDeleteProduct } =
-    useDeleteProduct();
-
-  useEffect(() => {
-    getProductById(id);
-  }, [id]);
+  const { data: product, isLoading } = useProductQuery(productId);
+  const updateProductMutation = useUpdateProductMutation();
+  const deleteProductMutation = useDeleteProductMutation();
 
   const onSubmit = async (data: Product) => {
     try {
-      await updateProduct(data);
+      await updateProductMutation.mutateAsync(data);
       router.push("/products");
     } catch (error) {
       console.error(error);
@@ -44,7 +35,7 @@ export default function EditProductPage({
 
   const onDelete = async () => {
     try {
-      await deleteProduct(Number(id));
+      await deleteProductMutation.mutateAsync(productId);
       router.push("/products");
     } catch (error) {
       console.error(error);
@@ -53,18 +44,18 @@ export default function EditProductPage({
 
   return (
     <PageWrapper title="Modifica prodotto" backUrl="/products">
-      {isLoadingUpdateProduct || isLoading ? (
+      {updateProductMutation.isPending || isLoading ? (
         <Loader />
       ) : (
         <ProductForm
-          product={data?.data || null}
+          product={product ?? null}
           onSubmit={onSubmit}
-          isLoading={isLoadingUpdateProduct}
+          isLoading={updateProductMutation.isPending}
         >
           <FormSidebar
             onDelete={onDelete}
-            isLoadingSave={isLoadingUpdateProduct}
-            isLoadingDelete={isLoadingDeleteProduct}
+            isLoadingSave={updateProductMutation.isPending}
+            isLoadingDelete={deleteProductMutation.isPending}
             isEdit={true}
           />
         </ProductForm>
